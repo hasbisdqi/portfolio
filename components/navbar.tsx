@@ -4,6 +4,7 @@ import React from 'react'
 import { buttonVariants } from './ui/button'
 import Link, { LinkProps } from 'next/link'
 import { usePathname } from 'next/navigation'
+import { twMerge } from 'tailwind-merge';
 
 function Navbar({ children }: { children: React.ReactNode }) {
     return (
@@ -45,7 +46,7 @@ function NavLink({ href, children, ...props }: NavLinkProps) {
     const pathname = usePathname();
     const isActive = href === pathname;
     return (
-        <Link href={href} {...props} className={buttonVariants({ size: 'icon', variant: (isActive ? 'default' : 'ghost') })} >
+        <Link href={href} {...props} className={twMerge(buttonVariants({ size: 'icon', variant: (isActive ? 'default' : 'ghost') }))} >
             {children}
         </Link>
     )
