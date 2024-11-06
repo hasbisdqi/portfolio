@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+// import { Button } from "@/components/ui/button";
+// import { SunIcon } from "lucide-react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* <div className="fixed right-0 m-2">
+          <Button size={'icon'} variant={'secondary'}>
+            <SunIcon />
+          </Button>
+        </div> */}
         <Navbar>
           {children}
         </Navbar>
