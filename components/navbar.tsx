@@ -24,7 +24,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
                     </NavLink>
                 </div>
             </div>
-            <div className="sm:ml-16">
+            <div className="sm:ml-16 mb-16 sm:mb-0">
                 {children}
             </div>
         </>
