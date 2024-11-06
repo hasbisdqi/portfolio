@@ -8,8 +8,8 @@ import { usePathname } from 'next/navigation'
 function Navbar({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <div className="sm:h-screen h-16 w-screen bottom-0 bg-background border-r border-t border-border sm:w-16 fixed">
-                <div className="flex sm:flex-col items-center sm:justify-center justify-evenly gap-4 h-full">
+            <div className="md:h-screen h-16 w-screen bottom-0 bg-background border-r border-t border-border md:w-16 fixed">
+                <div className="flex md:flex-col items-center md:justify-center justify-evenly gap-4 h-full">
                     <NavLink href={'/'}>
                         <HomeIcon />
                     </NavLink>
@@ -24,8 +24,13 @@ function Navbar({ children }: { children: React.ReactNode }) {
                     </NavLink>
                 </div>
             </div>
-            <div className="sm:ml-16 mb-16 sm:mb-0">
+            <div className="md:ml-16 mb-16 md:mb-0 flex min-h-screen justify-between flex-col">
                 {children}
+                <footer className="p-4 bg-background border-t border-border">
+                    <div className="text-center text-sm text-muted-foreground">
+                        &#169; {new Date().getFullYear()} Hasbi Assidiqi. All rights reserved.
+                    </div>
+                </footer>
             </div>
         </>
     )
