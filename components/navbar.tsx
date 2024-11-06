@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 function Navbar({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <div className="lg:h-screen h-16 w-screen bottom-0 bg-background border-r border-t border-border lg:w-16 fixed">
+            <div className="lg:h-screen h-16 w-screen bottom-0 bg-background/30 backdrop-blur border-r border-t border-border lg:w-16 fixed z-50">
                 <div className="flex lg:flex-col items-center lg:justify-center justify-evenly gap-4 h-full">
                     <NavLink href={'/'}>
                         <HomeIcon />

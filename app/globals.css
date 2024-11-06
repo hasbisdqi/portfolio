@@ -71,5 +71,6 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(hsla(47.9, 95.8%, 53.1%, 0.2), hsl(var(--background)) 60%);
   }
 }

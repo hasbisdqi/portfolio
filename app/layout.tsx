@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from "@/components/mode-toggle";
 // import { Button } from "@/components/ui/button";
 // import { SunIcon } from "lucide-react";
 
@@ -27,18 +29,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <div className="fixed right-0 m-2">
-          <Button size={'icon'} variant={'secondary'}>
-            <SunIcon />
-          </Button>
-        </div> */}
-        <Navbar>
-          {children}
-        </Navbar>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+
+          <div className="fixed right-0 m-2">
+            <ModeToggle />
+          </div>
+          <Navbar>
+            {children}
+          </Navbar>
+        </ThemeProvider>
       </body>
     </html>
   );
