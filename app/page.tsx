@@ -1,27 +1,32 @@
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="flex justify-center items-center flex-1 py-12">
-      <div className="grid grid-cols-12 gap-8 md:max-w-screen-lg">
-        <div className="text-center max-w-sm col-span-full md:col-span-5 mx-auto my-auto">
-          <h1 className="text-4xl font-bold text-foreground">Hi, Im Hasbi Assidiqi</h1>
+      <div className="grid grid-cols-12 gap-8 lg:max-w-screen-xl px-4">
+        <div className="max-w-md lg:text-left text-center col-span-full lg:col-span-5 mx-auto my-auto">
+          <h1 className="text-4xl font-bold text-foreground mb-4">Hi, Im <span className="text-primary">Hasbi Assidiqi</span></h1>
           <p className="text-muted-foreground text-pretty text-sm">I am a passionate web developer with a knack for creating dynamic and responsive web applications. With a strong foundation in JavaScript and React, I enjoy bringing ideas to life in the browser.</p>
+          <div className="flex gap-4 mt-6">
+            <Button>Get in touch</Button>
+            <Button variant={'secondary'}>About me</Button>
+          </div>
         </div>
-        <div className="grid md:grid-cols-2 gap-2 col-span-full md:col-span-7">
-          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 max-w-sm md:max-w-full">
-            <h2 className="text-xl font-bold">Lorem ipsum dolor sit amet consectetur</h2>
+        <div className="grid lg:grid-cols-2 gap-2 col-span-full lg:col-span-7 lg:max-w-full max-w-md">
+          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 lg:max-w-full">
+            <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
             <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
           </div>
-          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 max-w-sm md:max-w-full">
-            <h2 className="text-xl font-bold">Lorem ipsum dolor sit amet consectetur</h2>
+          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 lg:max-w-full">
+            <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
             <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
           </div>
-          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 max-w-sm md:max-w-full">
-            <h2 className="text-xl font-bold">Lorem ipsum dolor sit amet consectetur</h2>
+          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 lg:max-w-full">
+            <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
             <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
           </div>
-          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 max-w-sm md:max-w-full">
-            <h2 className="text-xl font-bold">Lorem ipsum dolor sit amet consectetur</h2>
+          <div className="border border-primary rounded-lg bg-gradient-to-b from-primary/5 p-4 lg:max-w-full">
+            <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
             <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
           </div>
         </div>
