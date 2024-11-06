@@ -5,11 +5,11 @@ import { buttonVariants } from './ui/button'
 import Link, { LinkProps } from 'next/link'
 import { usePathname } from 'next/navigation'
 
-function Navbar() {
+function Navbar({ children }: { children: React.ReactNode }) {
     return (
-        <div>
-            <div className="h-screen border-r border-border w-16 fixed">
-                <div className="flex flex-col items-center justify-center gap-4 h-full">
+        <>
+            <div className="sm:h-screen h-16 w-screen bottom-0 border-r border-t border-border sm:w-16 fixed">
+                <div className="flex sm:flex-col items-center sm:justify-center justify-evenly gap-4 h-full">
                     <NavLink href={'/'}>
                         <HomeIcon />
                     </NavLink>
@@ -24,7 +24,10 @@ function Navbar() {
                     </NavLink>
                 </div>
             </div>
-        </div>
+            <div className="sm:ml-16">
+                {children}
+            </div>
+        </>
     )
 }
 
