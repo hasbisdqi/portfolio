@@ -4,8 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle";
-// import { Button } from "@/components/ui/button";
-// import { SunIcon } from "lucide-react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
