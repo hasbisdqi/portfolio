@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		backgroundImage: {
+			'radial-gradient': 'radial-gradient(var(--tw-gradient-stops))'
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
