@@ -44,7 +44,7 @@ interface NavLinkProps extends LinkProps {
 
 function NavLink({ href, children, ...props }: NavLinkProps) {
     const pathname = usePathname();
-    const isActive = href === pathname;
+    const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
     return (
         <Link href={href} {...props} className={twMerge(buttonVariants({ size: 'icon', variant: (isActive ? 'default' : 'ghost') }))} >
             {children}
