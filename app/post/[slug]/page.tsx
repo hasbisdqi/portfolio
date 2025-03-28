@@ -1,8 +1,12 @@
 import React from 'react'
 
-export default function page({ params }: { params: { slug: string } }) {
-
-    return (
-        <div>{params.slug}</div>
-    )
+async function Page({
+    params,
+}: {
+    params: Promise<{ slug: string }>
+}) {
+    const { slug } = await params
+    return <div>My Post: {slug}</div>
 }
+
+export default Page

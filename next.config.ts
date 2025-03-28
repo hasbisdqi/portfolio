@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "placehold.co",
                 port: "",
-                pathname: "/1920x1080",
+                pathname: "/**",
             },
         ],
         dangerouslyAllowSVG: true,
