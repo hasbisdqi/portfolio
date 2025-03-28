@@ -30,7 +30,7 @@ export default function Post() {
             <Link href={'post/' + item.title.toLowerCase().replace(/ /g, '-')} key={index} className="flex gap-4 items-center group cursor-pointer">
             <span className='text-muted-foreground text-sm font-mono hidden md:block'>{item.date}</span>
             <div className="size-3 rounded-full border border-primary/20 bg-primary/10 hidden md:block"></div>
-            <div className="border border-primary/20 backdrop-blur rounded-lg bg-primary/5 group-hover:bg-primary/10 p-4 w-full max-w-lg">
+            <div className="border border-primary/20 backdrop-blur-sm rounded-lg bg-primary/5 group-hover:bg-primary/10 p-4 w-full max-w-lg">
               <h2 className="text-md font-bold">{item.title}</h2>
               <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
             </div>

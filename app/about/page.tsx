@@ -191,7 +191,7 @@ export default function AboutPage() {
     const data = pageData
 
     return (
-        <main className="my-24 px-4 mx-auto max-w-screen-xl">
+        <main className="my-24 px-4 mx-auto max-w-(--breakpoint-xl)">
             <h1 className="text-4xl font-bold text-center">About Me</h1>
             <p className="text-center text-sm text-muted-foreground mt-4 mb-12">
                 Get to know more about my background, skills, and professional journey in web development.

@@ -21,7 +21,7 @@ export default function page() {
     }
   ];
   return (
-    <main className='mt-24 px-4 mx-auto max-w-screen-xl'>
+    <main className='mt-24 px-4 mx-auto max-w-(--breakpoint-xl)'>
       <h1 className='text-4xl font-bold text-center'>
         Projects
       </h1>
