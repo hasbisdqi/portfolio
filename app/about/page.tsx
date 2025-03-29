@@ -1,10 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Linkedin, Mail, Twitter, type LucideIcon } from "lucide-react"
+import { Calendar, ExternalLink, Github, Linkedin, Mail, Phone, Twitter, type LucideIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
+import { cn } from "@/lib/utils"
+import { DotPattern } from "@/components/magicui/dot-pattern"
 
 // Define types for all data structures
 type SocialLink = {
@@ -46,9 +51,20 @@ type Education = {
     period: string
 }
 
+type ContactMethod = {
+    type: string
+    value: string
+    icon: LucideIcon
+    url?: string
+    label?: string
+}
+
 type ContactInfo = {
     email: string
     linkedin: string
+    phone: string
+    availability: string
+    methods: ContactMethod[]
 }
 
 // Define the complete page data structure
@@ -63,11 +79,11 @@ type AboutPageData = {
 // Internal data source
 const pageData: AboutPageData = {
     profile: {
-        name: "John Doe",
+        name: "Hasbi Assidiqi",
         title: "Full Stack Developer",
-        imageSrc: "/placeholder.svg?height=400&width=400",
+        imageSrc: "/avatar.jpeg",
         bio: [
-            "Hello! I'm John, a passionate full-stack developer with over 5 years of experience building web applications. I specialize in creating responsive, user-friendly interfaces and robust backend systems.",
+            "Hello! I'm Hasbi, a passionate full-stack developer with over 5 years of experience building web applications. I specialize in creating responsive, user-friendly interfaces and robust backend systems.",
             "My journey in software development began during my computer science studies, where I discovered my passion for creating digital solutions that solve real-world problems. Since then, I've worked with startups and established companies to deliver high-quality software products."
         ],
         resumeUrl: "/resume.pdf",
@@ -183,15 +199,74 @@ const pageData: AboutPageData = {
     contact: {
         email: "contact@example.com",
         linkedin: "linkedin.com/in/johndoe",
+        phone: "+1 (555) 123-4567",
+        availability: "Available for freelance work",
+        methods: [
+            {
+                type: "Email",
+                value: "contact@example.com",
+                icon: Mail,
+                url: "mailto:contact@example.com",
+                label: "Send an email",
+            },
+            {
+                type: "LinkedIn",
+                value: "linkedin.com/in/johndoe",
+                icon: Linkedin,
+                url: "https://linkedin.com/in/johndoe",
+                label: "Connect on LinkedIn",
+            },
+            {
+                type: "Phone",
+                value: "+1 (555) 123-4567",
+                icon: Phone,
+                url: "tel:+15551234567",
+                label: "Call me",
+            }
+        ],
     },
 }
 
+function ContactForm() {
+    return (
+        <form className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                    <Input id="name" placeholder="Your Name" />
+                </div>
+                <div className="space-y-2">
+                    <Input id="email" type="email" placeholder="Your Email" />
+                </div>
+            </div>
+            <div className="space-y-2">
+                <Input id="subject" placeholder="Subject" />
+            </div>
+            <div className="space-y-2">
+                <Textarea id="message" placeholder="Your Message" className="min-h-[120px]" />
+            </div>
+            <Button type="submit" className="w-full">
+                Send Message
+            </Button>
+        </form>
+    )
+}
+
 export default function AboutPage() {
-    // Use the internal data source
     const data = pageData
 
     return (
         <main className="my-24 px-4 mx-auto max-w-(--breakpoint-xl)">
+            <DotPattern
+                width={20}
+                height={20}
+                cx={1}
+                cy={1}
+                cr={1}
+                className={cn(
+                    "opacity-40 fixed -z-1",
+                    "[mask-image:linear-gradient(to_bottom_right,transparent,transparent,white)]",
+                )}
+            />
             <h1 className="text-4xl font-bold text-center">About Me</h1>
             <p className="text-center text-sm text-muted-foreground mt-4 mb-12">
                 Get to know more about my background, skills, and professional journey in web development.
@@ -200,7 +275,18 @@ export default function AboutPage() {
             {/* Profile Section */}
             <Card className="mb-12 overflow-hidden">
                 <div className="md:flex">
-                    <div className="bg-muted p-8 flex flex-col items-center justify-center md:w-1/3">
+                    <div className="relative p-8 flex flex-col items-center justify-center md:w-1/3">
+                        <AnimatedGridPattern
+                            numSquares={15}
+                            maxOpacity={0.1}
+                            duration={3}
+                            repeatDelay={1}
+                            strokeDasharray={"4 2"}
+                            className={cn(
+                                "[mask-image:linear-gradient(to_bottom_right,white,transparent)]",
+                                "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
+                            )}
+                        />
                         <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-background mb-4">
                             <Image
                                 src={data.profile.imageSrc || "/placeholder.svg"}
@@ -299,18 +385,79 @@ export default function AboutPage() {
                 {/* Contact Section */}
                 <section>
                     <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
-                    <p className="mb-4">
-                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-                    </p>
-                    <div className="grid gap-4 sm:grid-cols-2">
-                        <div className="flex items-center gap-2">
-                            <Mail className="h-5 w-5 text-muted-foreground" />
-                            <span>{data.contact.email}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Linkedin className="h-5 w-5 text-muted-foreground" />
-                            <span>{data.contact.linkedin}</span>
-                        </div>
+                    <div className="grid gap-6 md:grid-cols-2">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Get In Touch</CardTitle>
+                                <CardDescription>
+                                    I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your
+                                    vision.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-4">
+                                    {data.contact.methods.map((method, index) => {
+                                        const Icon = method.icon
+                                        return (
+                                            <div key={index} className="flex items-center gap-3">
+                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
+                                                    <Icon className="h-5 w-5" />
+                                                </div>
+                                                <div className="space-y-0.5">
+                                                    <p className="text-sm font-medium">{method.type}</p>
+                                                    {method.url ? (
+                                                        <Link
+                                                            href={method.url}
+                                                            className="text-sm text-muted-foreground hover:underline flex items-center gap-1"
+                                                            target={method.url.startsWith("http") ? "_blank" : undefined}
+                                                        >
+                                                            {method.value}
+                                                            {method.label && (
+                                                                <span className="text-xs text-primary flex items-center">
+                                                                    {method.label} <ExternalLink className="h-3 w-3 ml-1" />
+                                                                </span>
+                                                            )}
+                                                        </Link>
+                                                    ) : (
+                                                        <p className="text-sm text-muted-foreground">{method.value}</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="w-full">
+                                    <p className="text-sm text-muted-foreground mb-2 flex items-center gap-1">
+                                        <Calendar className="h-4 w-4 inline mr-1" />
+                                        <span>{data.contact.availability}</span>
+                                    </p>
+                                    <div className="flex gap-2">
+                                        {data.profile.socialLinks.map((link) => {
+                                            const Icon = link.icon
+                                            return (
+                                                <Button key={link.platform} variant="outline" size="sm" asChild>
+                                                    <Link href={link.url} target="_blank">
+                                                        <Icon className="h-4 w-4 mr-2" /> {link.platform}
+                                                    </Link>
+                                                </Button>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Send Me a Message</CardTitle>
+                                <CardDescription>Fill out the form below and I&apos;ll get back to you as soon as possible.</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ContactForm />
+                            </CardContent>
+                        </Card>
                     </div>
                 </section>
             </div>
