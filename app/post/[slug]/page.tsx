@@ -1,31 +1,20 @@
-import { getAllPosts } from "@/lib/posts";
-import { Calendar, User } from "lucide-react";
+import { posts } from "#site/content";
+import { MDXContent } from "@/app/components/mdx-components";
+import { Badge } from "@/components/ui/badge";
+import { formatDate, getReadingTime } from "@/lib/utils";
+import { Calendar, Clock } from "lucide-react";
 import Link from "next/link";
-import rehypeHighlight from "rehype-highlight";
-import { remark } from "remark";
-import "highlight.js/styles/github-dark.css";
-import remarkHtml from "remark-html";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
 
 interface PostPageProps {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-    const { slug } = params;
-    const posts = getAllPosts();
-    const post = posts.find((p) => p.slug === slug);
+    const { slug } = await params;
+    const post = posts.find((p) => p.slugAsParams === slug);
     if (!post) {
         return <div>Post not found</div>;
     }
-    const processedContent = await remark()
-        .use(remarkHtml)
-        .use(remarkRehype)
-        .use(rehypeHighlight)
-        .use(rehypeStringify)
-        .process(post.content);
-    const contentHtml = processedContent.toString();
 
     return (
         <article className="container px-4 py-12 mx-auto md:py-16">
@@ -40,19 +29,23 @@ export default async function PostPage({ params }: PostPageProps) {
                     <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">{post.title}</h1>
 
                     <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-muted-foreground">
-                        <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            <time dateTime={post.date}>{post.date}</time>
+                        <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            <time dateTime={post.date}>{formatDate(post.date)}</time>
                         </div>
-                        {/* <div className="flex items-center">
+                        <div className="flex items-center">
                             <Clock className="w-4 h-4 mr-1" />
-                            <span>{post.readingTime} min read</span>
-                        </div> */}
+                            <span>{getReadingTime(post.body)}</span>
+                        </div>
                         {/* <div className="flex items-center">
                             <User className="w-4 h-4 mr-1" />
                             <span>{post.author.name}</span>
                         </div> */}
-                        {/* <Badge variant="secondary">{post.category}</Badge> */}
+                        <div className="flex gap-1">
+                        {post.tags?.map((i) => (
+                            <Badge key={i} variant="secondary">{i}</Badge>
+                        ))}
+                        </div>
                     </div>
                 </div>
 
@@ -60,8 +53,8 @@ export default async function PostPage({ params }: PostPageProps) {
                     {/* <Image src={post.coverImage || "/placeholder.svg"} alt={post.title} fill className="object-cover" priority /> */}
                 </div>
 
-                <div className="prose prose-lg max-w-none dark:prose-invert prose-code:p-0">
-                    <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+                <div className="prose prose-lg max-w-none dark:prose-invert">
+                    <MDXContent code={post.body} />
                 </div>
             </div>
         </article>
