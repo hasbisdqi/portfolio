@@ -1,5 +1,5 @@
-import { Meteors } from "@/components/magicui/meteors";
 import { Button } from "@/components/ui/button";
+import { Meteors } from "@/components/ui/meteors";
 
 export default function Home() {
     return (
@@ -32,7 +32,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <Meteors number={60} className="-z-1"/>
+            <Meteors number={60}/>
         </main>
     );
 }

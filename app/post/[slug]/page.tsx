@@ -3,6 +3,7 @@ import { MDXContent } from "@/app/components/mdx-components";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, getReadingTime } from "@/lib/utils";
 import { Calendar, Clock } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface PostPageProps {
@@ -50,7 +51,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 </div>
 
                 <div className="relative w-full mb-8 overflow-hidden rounded-lg aspect-video">
-                    {/* <Image src={post.coverImage || "/placeholder.svg"} alt={post.title} fill className="object-cover" priority /> */}
+                    <Image src={post.coverImage || "/avatar.jpeg"} alt={post.title} fill className="object-cover" priority />
                 </div>
 
                 <div className="prose prose-lg max-w-none dark:prose-invert">

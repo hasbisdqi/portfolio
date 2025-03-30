@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
 import { cn } from "@/lib/utils"
-import { DotPattern } from "@/components/magicui/dot-pattern"
 
 // Define types for all data structures
 type SocialLink = {
@@ -256,17 +255,16 @@ export default function AboutPage() {
 
     return (
         <main className="my-24 px-4 mx-auto max-w-(--breakpoint-xl)">
-            <DotPattern
-                width={20}
-                height={20}
-                cx={1}
-                cy={1}
-                cr={1}
+            <div
                 className={cn(
-                    "opacity-40 fixed -z-1",
-                    "[mask-image:linear-gradient(to_bottom_right,transparent,transparent,white)]",
+                    "fixed inset-0 -z-1 size-[700px] opacity-60",
+                    "[background-size:20px_20px]",
+                    "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+                    "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
                 )}
-            />
+            >
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
+            </div>
             <h1 className="text-4xl font-bold text-center">About Me</h1>
             <p className="text-center text-sm text-muted-foreground mt-4 mb-12">
                 Get to know more about my background, skills, and professional journey in web development.

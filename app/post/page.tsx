@@ -1,12 +1,22 @@
 import { posts } from '#site/content'
-import { formatDate } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react'
 
 export default function Post() {
     const allposts = posts;
     return (
-        <main className='mt-24 px-4'>
+        <main className='mt-24 px-4 relative'>
+            <div
+                className={cn(
+                    "absolute inset-0 -z-1 size-[700px] opacity-60 left-1/2",
+                    "[background-size:20px_20px]",
+                    "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+                    "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+                )}
+            >
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
+            </div>
             <h1 className='text-4xl font-bold text-center'>
                 Exploring the Depths of Knowledge
             </h1>
