@@ -155,3 +155,64 @@
         @apply bg-background text-foreground bg-radial-gradient from-primary/20 to-60%;
     }
 }
+
+[data-rehype-pretty-code-figure] pre {
+    @apply px-0;
+}
+
+[data-rehype-pretty-code-figure] code {
+    @apply text-sm !leading-loose md:text-base border-0 p-0;
+}
+
+[data-rehype-pretty-code-figure] code[data-line-numbers] {
+    counter-reset: line;
+}
+
+[data-rehype-pretty-code-figure] code[data-line-numbers]>[data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    @apply mr-4 inline-block w-4 text-right text-gray-500;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+    @apply border-l-2 border-l-transparent px-3;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+    @apply border-l-primary bg-muted/50;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] > span {
+    background-color: transparent !important;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+    @apply rounded bg-muted px-1 py-0.5;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-chars] > * {
+    background-color: transparent !important;
+}
+
+[data-rehype-pretty-code-figure] [data-chars-id] {
+    @apply border-b-2 p-1 shadow-none;
+}
+
+.subheading-anchor {
+    @apply no-underline hover:underline;
+}
+
+code[data-theme],
+code[data-theme] span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+
+    code[data-theme],
+    code[data-theme] span {
+        color: var(--shiki-dark);
+        background-color: var(--shiki-dark-bg);
+    }
+}

@@ -1,10 +1,11 @@
-import { posts } from '#site/content'
+import { getPosts } from '@/lib/contents';
 import { cn, formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react'
 
-export default function Post() {
-    const allposts = posts;
+export default async function Post() {
+    const posts = await getPosts();
+    const allposts = posts.sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
     return (
         <main className='mt-24 px-4 relative'>
             <div
@@ -24,12 +25,12 @@ export default function Post() {
 
             <div className="mt-8 mx-auto w-fit grid gap-3">
                 {allposts.map((item, index) => (
-                    <Link href={item.slug} key={index} className="flex gap-4 items-center group cursor-pointer">
-                        <time className='text-muted-foreground text-sm font-mono hidden md:block' dateTime={item.date}>{formatDate(item.date)}</time>
-                        <div className="size-3 rounded-full border border-primary/20 bg-primary/10 hidden md:block"></div>
+                    <Link href={'post/' + item.meta.slug} key={index} className="flex gap-4 items-center justify-end group cursor-pointer">
+                        <time className='text-muted-foreground text-sm font-mono hidden md:block' dateTime={item.meta.date}>{formatDate(item.meta.date)}</time>
+                        <div className="size-3 rounded-full border border-primary/20 bg-primary/5 hidden md:block"></div>
                         <div className="border border-primary/20 backdrop-blur-sm rounded-lg bg-primary/5 group-hover:bg-primary/10 p-4 w-full max-w-lg">
-                            <h2 className="text-md font-bold">{item.title}</h2>
-                            <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                            <h2 className="text-md font-bold">{item.meta.title}</h2>
+                            <p className="text-sm text-muted-foreground line-clamp-2">{item.meta.description}</p>
                         </div>
                     </Link>
                 ))}

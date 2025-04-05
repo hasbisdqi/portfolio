@@ -1,30 +1,52 @@
-import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, Github } from "lucide-react"
 import { notFound } from "next/navigation"
-import { projects } from '#site/content'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { MDXContent } from "@/app/components/mdx-components"
+import { getProjects } from "@/lib/contents"
+import CloudinaryImage from "@/components/cloudinary-image"
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-    const project = projects.find((p) => p.slugAsParams == params.slug);
+interface ProjectPageProps {
+    params: Promise<{ slug: string }>;
+}
+export async function generateStaticParams() {
+    const projects = await getProjects();
+    return projects.map((project) => ({ slug: project.meta.slug }));
+}
+export async function generateMetadata({ params }: ProjectPageProps) {
+    const { slug } = await params;
+    const posts = await getProjects();
+    const post = posts.find((p) => p.meta.slug === slug);
 
-    if (!project) {
+    if (!post) {
         return {
-            title: "Project Not Found",
-        }
+            title: 'Post Not Found',
+            description: 'The requested post could not be found.',
+        };
     }
 
     return {
-        title: `${project.title} | My Portfolio`,
-        description: project.description,
-    }
+        title: post.meta.title,
+        description: post.meta.description || 'Read more about this topic.',
+        openGraph: {
+            title: post.meta.title,
+            description: post.meta.description || 'Read more about this topic.',
+            images: [`/api/og?title=${encodeURIComponent(post.meta.title)}`],
+            type: 'article',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.meta.title,
+            description: post.meta.description || 'Read more about this topic.',
+            images: [`/api/og?title=${encodeURIComponent(post.meta.title)}`],
+        },
+    };
 }
-
-export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
-    const project = projects.find((p) => p.slugAsParams == params.slug);
+export default async function ProjectDetailPage({ params }: ProjectPageProps) {
+    const projects = await getProjects();
+    const { slug } = await params;
+    const project = projects.find((p) => p.meta.slug === slug);
 
     if (!project) {
         notFound()
@@ -47,11 +69,11 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
             {/* Project header */}
             <div className="space-y-4 mb-8">
-                <h1 className="text-4xl font-bold tracking-tight">{project.title}</h1>
-                <p className="text-xl text-muted-foreground">{project.description}</p>
+                <h1 className="text-4xl font-bold tracking-tight">{project.meta.title}</h1>
+                <p className="text-xl text-muted-foreground">{project.meta.description}</p>
 
                 <div className="flex flex-wrap gap-2 pt-2">
-                    {project.technologies?.map((tech) => (
+                    {project.meta.technologies?.map((tech) => (
                         <Badge key={tech} variant="secondary">
                             {tech}
                         </Badge>
@@ -60,13 +82,13 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
                 <div className="flex items-center gap-4 pt-2">
                     <Button asChild>
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                        <a href={project.meta.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                             <ExternalLink className="h-4 w-4" />
                             Live Demo
                         </a>
                     </Button>
                     <Button variant="outline" asChild>
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                        <a href={project.meta.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                             <Github className="h-4 w-4" />
                             View Code
                         </a>
@@ -76,12 +98,11 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
             {/* Hero image */}
             <div className="relative aspect-video w-full overflow-hidden rounded-lg mb-12 bg-muted">
-                <Image
-                    src={project.coverImage || "/placeholder.svg"}
-                    alt={`${project.title} preview`}
+                <CloudinaryImage
+                    src={project.meta.coverImage || "/placeholder.svg"}
+                    alt={`${project.meta.title} preview`}
                     fill
                     className="object-cover"
-                    priority
                 />
             </div>
 
@@ -89,7 +110,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div className="md:col-span-3 prose dark:prose-invert max-w-none">
                     {/* Markdown Content */}
-                    <MDXContent code={project.body} />
+                    {project.content}
                 </div>
 
                 <div className="md:col-span-1">
@@ -100,22 +121,22 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
                         <div className="space-y-3">
                             <div>
                                 <p className="text-sm text-muted-foreground">Year</p>
-                                <p className="font-medium">{project.year}</p>
+                                <p className="font-medium">{project.meta.year}</p>
                             </div>
 
                             <div>
                                 <p className="text-sm text-muted-foreground">Duration</p>
-                                <p className="font-medium">{project.duration}</p>
+                                <p className="font-medium">{project.meta.duration}</p>
                             </div>
 
                             <div>
                                 <p className="text-sm text-muted-foreground">Role</p>
-                                <p className="font-medium">{project.role}</p>
+                                <p className="font-medium">{project.meta.role}</p>
                             </div>
 
                             <div>
                                 <p className="text-sm text-muted-foreground">Client</p>
-                                <p className="font-medium">{project.client}</p>
+                                <p className="font-medium">{project.meta.client}</p>
                             </div>
                         </div>
                     </div>
@@ -125,11 +146,11 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
             {/* Image gallery */}
             <h2 className="text-2xl font-semibold mb-6">Project Gallery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                {project.images.map((image, index) => (
+                {project.meta.images.map((image, index) => (
                     <div key={index} className="relative aspect-video overflow-hidden rounded-lg bg-muted">
-                        <Image
+                        <CloudinaryImage
                             src={image || "/placeholder.svg"}
-                            alt={`${project.title} screenshot ${index + 2}`}
+                            alt={`${project.meta.title} screenshot ${index + 2}`}
                             fill
                             className="object-cover hover:scale-105 transition-transform duration-300"
                         />

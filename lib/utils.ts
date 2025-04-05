@@ -21,6 +21,21 @@ export function formatDate(input: string | number): string {
  * @returns reading time in format "X min read"
  */
 export function getReadingTime(text: string): string {
-  if (!text) return "0 min read"; // Avoid Error
-  return readingTime(text).text;
+    if (!text) return "0 min read"; // Avoid Error
+    return readingTime(text).text;
 }
+
+export const toDataURL = (url: string) =>
+    fetch(url)
+        .then((response) => response.blob())
+        .then(
+            (blob) =>
+                new Promise<string>((resolve, reject) => {
+                    blob.arrayBuffer().then((arrayBuffer) => {
+                        const reader = Buffer.from(arrayBuffer).toString('base64');
+                        resolve(`data:${blob.type};base64,${reader}`);
+                    }).catch(reject);
+                })
+        );
+
+

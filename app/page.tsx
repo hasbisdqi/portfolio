@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Meteors } from "@/components/ui/meteors";
+import { getPosts } from "@/lib/contents";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+    const posts = await getPosts();
     return (
         <main className="flex justify-center items-center flex-1 py-12 relative overflow-hidden">
             <div className="grid grid-cols-12 gap-8 lg:max-w-(--breakpoint-xl) px-4">
@@ -14,25 +17,18 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="grid lg:grid-cols-2 gap-2 col-span-full lg:col-span-7 lg:max-w-full max-w-md">
-                    <div className="border border-primary/20 backdrop-blur-sm rounded-lg bg-primary/10 p-4 lg:max-w-full">
-                        <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
-                        <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
-                    </div>
-                    <div className="border border-primary/20 backdrop-blur-sm rounded-lg bg-primary/10 p-4 lg:max-w-full">
-                        <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
-                        <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
-                    </div>
-                    <div className="border border-primary/20 backdrop-blur-sm rounded-lg bg-primary/10 p-4 lg:max-w-full">
-                        <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
-                        <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
-                    </div>
-                    <div className="border border-primary/20 backdrop-blur-sm rounded-lg bg-primary/10 p-4 lg:max-w-full">
-                        <h2 className="text-md font-bold">Lorem ipsum dolor sit amet consectetur</h2>
-                        <p className="text-sm text-muted-foreground line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, natus enim repudiandae accusamus doloremque sequi. Voluptate aliquam similique incidunt sapiente.</p>
-                    </div>
+                    {posts.slice(0, 4).map((post) => {
+                        return (
+                            <div key={post.meta.slug} className="border border-primary/20 backdrop-blur-[3px] rounded-lg bg-primary/5 hover:bg-primary/10 transition-all hover:scale-105 hover:-translate-y-1.5 hover:z-10 p-4 lg:max-w-full">
+                                <Link className="absolute inset-0" href={"post/" + post.meta.slug} />
+                                <h2 className="text-md font-bold">{post.meta.title}</h2>
+                                <p className="text-sm text-muted-foreground line-clamp-2">{post.meta.description}</p>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
-            <Meteors number={60}/>
+            <Meteors number={60} className="-z-1" />
         </main>
     );
 }

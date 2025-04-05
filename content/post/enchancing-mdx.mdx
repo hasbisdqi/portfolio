@@ -1,0 +1,105 @@
+---
+title: Enhancing Your MDX Blog with Rehype Pretty Code
+description: A deep dive into syntax highlighting, customization, and advanced features of Rehype Pretty Code
+date: 2024-03-04
+tags: ["code", "rehype pretty", "mdx", "syntax highlighting", "web development"]
+published: true
+coverImage: https://res.cloudinary.com/doj9hfdji/image/upload/v1721261193/cld-sample-5.jpg
+---
+
+When it comes to displaying code snippets in your MDX-powered blog, **Rehype Pretty Code** provides an elegant and customizable solution. Whether you want syntax highlighting, line numbering, or advanced theming, this tool allows you to present code in a visually appealing way.
+
+## Why Use Rehype Pretty Code?
+
+MDX (Markdown + JSX) is a powerful way to write content for blogs and documentation sites. However, displaying code snippets effectively requires additional tools. **Rehype Pretty Code** stands out due to:
+
+- **Advanced Syntax Highlighting** - Supports multiple programming languages.
+- **Custom Themes** - Choose from predefined themes like Dracula, GitHub, or even define your own.
+- **Line Numbering** - Improve readability with optional line numbers.
+- **Line and Word Highlights** - Highlight specific lines or words within the code.
+- **Customizable Components** - Modify how code blocks render in your MDX setup.
+
+## Setting Up Rehype Pretty Code in MDX
+
+To integrate Rehype Pretty Code into your Next.js or Vite project, follow these steps:
+
+### Installation
+
+```sh
+npm install rehype-pretty-code
+```
+
+### Configuration in Next.js
+
+Modify your `next.config.mjs` or MDX configuration:
+
+```js
+import rehypePrettyCode from "rehype-pretty-code";
+
+export default {
+  rehypePlugins: [[rehypePrettyCode, { theme: "dracula" }]],
+};
+```
+
+## Using Code Blocks with Custom Styling
+
+Once configured, you can use enhanced code blocks in your MDX files. Here’s an example demonstrating syntax highlighting, line numbers, and line highlights:
+
+```js {1,3}
+const message = "Hello, world!";
+console.log(message); // Highlighted line
+function greet() {
+  return "Hi there!";
+}
+```
+
+### Word Highlighting
+
+If you want to emphasize specific words or variables within a code snippet, you can do so by specifying highlight rules:
+
+```js {"highlight": ["message", "console.log"]}
+const message = "Hello, world!";
+console.log(message);
+```
+
+## Choosing the Right Theme
+
+Rehype Pretty Code allows you to customize themes to match your blog’s aesthetic. Some popular themes include:
+
+- **Dracula** (Dark mode-friendly, vibrant colors)
+- **GitHub** (Classic look, great for documentation)
+- **Night Owl** (Dark mode with rich contrast)
+- **Custom Themes** (Define your own styles)
+
+To use a custom theme, you can modify the configuration:
+
+```js
+export default {
+  rehypePlugins: [[rehypePrettyCode, { theme: "my-custom-theme" }]],
+};
+```
+
+## Troubleshooting and Best Practices
+
+### Common Issues
+
+1. **Code Blocks Not Rendering Properly?**
+   - Ensure MDX is correctly set up with `next-mdx-remote` or `@mdx-js/loader`.
+   - Double-check the rehype plugin installation.
+
+2. **Theme Not Applying?**
+   - Verify that the correct theme name is used.
+   - Try switching themes to debug the issue.
+
+### Performance Considerations
+
+- Avoid excessive customizations that slow down rendering.
+- Optimize code snippets by limiting unnecessary styling.
+- Use lazy loading if you have a large number of code blocks.
+
+## Conclusion
+
+Rehype Pretty Code is an excellent choice for enhancing the presentation of code snippets in MDX blogs. With features like syntax highlighting, line numbering, and word highlights, it brings clarity and readability to technical content. Whether you’re a developer writing tutorials or a technical blogger, this tool ensures that your code stands out.
+
+Start integrating Rehype Pretty Code today and make your code snippets visually appealing and easier to read!
+

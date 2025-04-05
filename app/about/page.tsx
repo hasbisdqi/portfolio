@@ -5,10 +5,33 @@ import { Calendar, ExternalLink, Github, Linkedin, Mail, Phone, Twitter, type Lu
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
 import { cn } from "@/lib/utils"
+import ContactForm from "./contact-form"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "About Me",
+    description: "Learn more about me and what I do.",
+    openGraph: {
+      title: "About Me",
+      description: "Learn more about me and what I do.",
+      images: [
+        {
+          url: "/api/og?title=About%20Me",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "About Me",
+      description: "Learn more about me and what I do.",
+      images: ["/api/og?title=About%20Me"],
+    },
+  };
+  
 
 // Define types for all data structures
 type SocialLink = {
@@ -224,30 +247,6 @@ const pageData: AboutPageData = {
             }
         ],
     },
-}
-
-function ContactForm() {
-    return (
-        <form className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                    <Input id="name" placeholder="Your Name" />
-                </div>
-                <div className="space-y-2">
-                    <Input id="email" type="email" placeholder="Your Email" />
-                </div>
-            </div>
-            <div className="space-y-2">
-                <Input id="subject" placeholder="Subject" />
-            </div>
-            <div className="space-y-2">
-                <Textarea id="message" placeholder="Your Message" className="min-h-[120px]" />
-            </div>
-            <Button type="submit" className="w-full">
-                Send Message
-            </Button>
-        </form>
-    )
 }
 
 export default function AboutPage() {

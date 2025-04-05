@@ -1,28 +1,11 @@
-// import Image from 'next/image'
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import React from 'react'
-import {projects} from '#site/content'
 import Link from 'next/link';
+import { getProjects } from '@/lib/contents';
+import CloudinaryImage from '@/components/cloudinary-image';
 
-export default function page() {
-    // const projects = [
-    //     {
-    //         title: "Project One",
-    //         technologies: ["NextJS", "React", "Tailwindcss"],
-    //         imageUrl: "https://res.cloudinary.com/doj9hfdji/image/upload/v1721261193/cld-sample-3.jpg"
-    //     },
-    //     {
-    //         title: "Project Two",
-    //         technologies: ["NodeJS", "Express", "MongoDB"],
-    //         imageUrl: "https://res.cloudinary.com/doj9hfdji/image/upload/v1721261193/cld-sample.jpg"
-    //     },
-    //     {
-    //         title: "Project Three",
-    //         technologies: ["VueJS", "NuxtJS", "Vuetify"],
-    //         imageUrl: "https://res.cloudinary.com/doj9hfdji/image/upload/v1721261193/cld-sample-2.jpg"
-    //     }
-    // ];
+export default async function page() {
+    const projects = await getProjects();
     return (
         <main className='mt-24 px-4 mx-auto max-w-(--breakpoint-xl) relative'>
             <div
@@ -43,10 +26,10 @@ export default function page() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
                 {projects.map((project, index) => (
                     <div key={index} className="bg-primary/5 backdrop-blur-[2px] border border-primary/20 p-4 relative rounded-lg overflow-hidden">
-                        <Link href={project.slug} className='inset-0 absolute'></Link>
-                        <h2 className="text-lg font-bold text-center">{project.title}</h2>
+                        <Link href={"project/"+project.meta.slug} className='inset-0 absolute'></Link>
+                        <h2 className="text-lg font-bold text-center">{project.meta.title}</h2>
                         <div className="flex gap-4 lowercase text-sm text-muted-foreground justify-center mt-2 mb-4">
-                            {project.technologies?.slice(0, 3).map((tech) => (
+                            {project.meta.technologies?.slice(0, 3).map((tech) => (
                                 <div key={tech} className='flex items-center gap-1'>
                                     <div className="bg-primary rounded-full size-2"></div>
                                     <span>
@@ -55,8 +38,7 @@ export default function page() {
                                 </div>
                             ))}
                         </div>
-                        <Image width={1920} height={1080} src={project.coverImage} className='rounded shadow-lg -mb-16' alt="" />
-                        {/* <Image width={600} height={400} src="https://placehold.co/600x400" alt="" /> */}
+                        <CloudinaryImage width={1920/4} height={1080/4} src={project.meta.coverImage} className='rounded shadow-lg -mb-16' alt="" />
                     </div>
                 ))}
             </div>
