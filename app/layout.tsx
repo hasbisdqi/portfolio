@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     openGraph: {
       title: "My Awesome Site",
       description: "Explore my projects, blog posts, and personal journey.",
-      url: "https://yourdomain.com",
+      url: "https://rnghbt.me",
       siteName: "My Awesome Site",
       images: [
         {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
       card: "summary_large_image",
       title: "My Awesome Site",
       description: "Explore my projects, blog posts, and personal journey.",
-      images: ["/api/og?title=My%20Awesome%20Site"],
+      images: [getOgImageUrl('My Awesome Site')],
     },
   };
   

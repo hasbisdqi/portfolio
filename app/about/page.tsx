@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
-import { cn } from "@/lib/utils"
+import { cn, getOgImageUrl } from "@/lib/utils"
 import ContactForm from "./contact-form"
 import { Metadata } from "next"
 
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
       description: "Learn more about me and what I do.",
       images: [
         {
-          url: "/api/og?title=About%20Me",
+          url: getOgImageUrl('About Me'),
           width: 1200,
           height: 630,
         },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
       card: "summary_large_image",
       title: "About Me",
       description: "Learn more about me and what I do.",
-      images: ["/api/og?title=About%20Me"],
+      images: [getOgImageUrl('About Me')],
     },
   };
   
@@ -84,7 +84,6 @@ type ContactMethod = {
 type ContactInfo = {
     email: string
     linkedin: string
-    phone: string
     availability: string
     methods: ContactMethod[]
 }
@@ -113,27 +112,27 @@ const pageData: AboutPageData = {
         socialLinks: [
             {
                 platform: "GitHub",
-                url: "https://github.com/johndoe",
+                url: "https://github.com/hasbisdqi",
                 icon: Github,
-                username: "johndoe",
+                username: "hasbisdqi",
             },
             {
                 platform: "LinkedIn",
-                url: "https://linkedin.com/in/johndoe",
+                url: "https://linkedin.com/in/rnghbt",
                 icon: Linkedin,
-                username: "linkedin.com/in/johndoe",
+                username: "linkedin.com/in/rnghbt",
             },
             {
                 platform: "Twitter",
-                url: "https://twitter.com/johndoe",
+                url: "https://twitter.com/rnghbt",
                 icon: Twitter,
-                username: "@johndoe",
+                username: "@rnghbt",
             },
             {
                 platform: "Email",
-                url: "mailto:contact@example.com",
+                url: "mailto:muhhasbiassidqi18@gmail.com",
                 icon: Mail,
-                username: "contact@example.com",
+                username: "muhhasbiassidqi18@gmail.com",
             },
         ],
     },
@@ -157,7 +156,6 @@ const pageData: AboutPageData = {
                 { name: "Express" },
                 { name: "PostgreSQL" },
                 { name: "MongoDB" },
-                { name: "Redux" },
             ],
         },
         {
@@ -176,10 +174,7 @@ const pageData: AboutPageData = {
             skills: [
                 { name: "VS Code" },
                 { name: "Figma" },
-                { name: "Jira" },
                 { name: "Responsive Design" },
-                { name: "Agile/Scrum" },
-                { name: "CI/CD" },
             ],
         },
     ],
@@ -219,31 +214,23 @@ const pageData: AboutPageData = {
         },
     ],
     contact: {
-        email: "contact@example.com",
-        linkedin: "linkedin.com/in/johndoe",
-        phone: "+1 (555) 123-4567",
+        email: "muhhasbiassidiqi18@gmail.com",
+        linkedin: "linkedin.com/in/rnghbt",
         availability: "Available for freelance work",
         methods: [
             {
                 type: "Email",
-                value: "contact@example.com",
+                value: "muhhasbiassidiqi18@gmail.com",
                 icon: Mail,
-                url: "mailto:contact@example.com",
+                url: "mailto:muhhasbiassidiqi18@gmail.com",
                 label: "Send an email",
             },
             {
                 type: "LinkedIn",
-                value: "linkedin.com/in/johndoe",
+                value: "linkedin.com/in/rnghbt",
                 icon: Linkedin,
-                url: "https://linkedin.com/in/johndoe",
+                url: "https://linkedin.com/in/rnghbt",
                 label: "Connect on LinkedIn",
-            },
-            {
-                type: "Phone",
-                value: "+1 (555) 123-4567",
-                icon: Phone,
-                url: "tel:+15551234567",
-                label: "Call me",
             }
         ],
     },
@@ -315,11 +302,11 @@ export default function AboutPage() {
                                 <p key={index}>{paragraph}</p>
                             ))}
                         </div>
-                        <Button asChild>
+                        {/* <Button asChild>
                             <Link href={data.profile.resumeUrl} target="_blank">
                                 Download Resume
                             </Link>
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </Card>
@@ -380,7 +367,7 @@ export default function AboutPage() {
                 </section>
 
                 {/* Contact Section */}
-                <section>
+                <section id="contact">
                     <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
                     <div className="grid gap-6 md:grid-cols-2">
                         <Card>

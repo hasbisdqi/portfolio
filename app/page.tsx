@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Meteors } from "@/components/ui/meteors";
 import { getPosts } from "@/lib/contents";
 import Link from "next/link";
@@ -12,8 +12,8 @@ export default async function Home() {
                     <h1 className="text-4xl font-bold text-foreground mb-4">Hi, Im <span className="text-primary">Hasbi Assidiqi</span></h1>
                     <p className="text-muted-foreground text-pretty text-sm">I am a passionate web developer with a knack for creating dynamic and responsive web applications. With a strong foundation in JavaScript and React, I enjoy bringing ideas to life in the browser.</p>
                     <div className="flex gap-4 mt-6 lg:justify-start justify-center">
-                        <Button>Get in touch</Button>
-                        <Button variant={"secondary"}>About me</Button>
+                        <Link href={'/about'} className={buttonVariants()}>Get in touch</Link>
+                        <Link href={'/about#contact'} className={buttonVariants({variant: "secondary"})}>About me</Link>
                     </div>
                 </div>
                 <div className="grid lg:grid-cols-2 gap-2 col-span-full lg:col-span-7 lg:max-w-full max-w-md">
