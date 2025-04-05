@@ -6,8 +6,8 @@ import Link from "next/link";
 export default async function Home() {
     const posts = await getPosts();
     return (
-        <main className="flex justify-center items-center flex-1 py-12 relative overflow-hidden">
-            <div className="grid grid-cols-12 gap-8 lg:max-w-(--breakpoint-xl) px-4">
+        <main className="flex justify-center items-center min-h-screen sm:-mb-16 py-12 relative overflow-hidden">
+            <div className="grid grid-cols-12 gap-8 lg:max-w-7xl px-4 sm:py-0 py-12">
                 <div className="max-w-md lg:text-left text-center col-span-full lg:col-span-5 mx-auto my-auto">
                     <h1 className="text-4xl font-bold text-foreground mb-4">Hi, Im <span className="text-primary">Hasbi Assidiqi</span></h1>
                     <p className="text-muted-foreground text-pretty text-sm">I am a passionate web developer with a knack for creating dynamic and responsive web applications. With a strong foundation in JavaScript and React, I enjoy bringing ideas to life in the browser.</p>

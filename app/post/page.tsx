@@ -7,7 +7,7 @@ export default async function Post() {
     const posts = await getPosts();
     const allposts = posts.sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
     return (
-        <main className='mt-24 px-4 relative'>
+        <main className='px-4 relative overflow-hidden min-h-screen sm:-mb-16'>
             <div
                 className={cn(
                     "absolute inset-0 -z-1 size-[700px] opacity-60 left-1/2",
@@ -18,7 +18,7 @@ export default async function Post() {
             >
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
             </div>
-            <h1 className='text-4xl font-bold text-center'>
+            <h1 className='text-4xl font-bold text-center mt-12 sm:mt-24'>
                 Exploring the Depths of Knowledge
             </h1>
             <p className='text-center text-sm text-muted-foreground mt-4'>This is a detailed post about various topics of interest. Stay tuned for more updates and insights!</p>

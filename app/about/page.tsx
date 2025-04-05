@@ -240,7 +240,7 @@ export default function AboutPage() {
     const data = pageData
 
     return (
-        <main className="my-24 px-4 mx-auto max-w-(--breakpoint-xl)">
+        <main className="mx-auto max-w-7xl sm:px-4 overflow-hidden px-2 min-h-screen sm:-mb-16">
             <div
                 className={cn(
                     "fixed inset-0 -z-1 size-[700px] opacity-60",
@@ -251,7 +251,7 @@ export default function AboutPage() {
             >
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
             </div>
-            <h1 className="text-4xl font-bold text-center">About Me</h1>
+            <h1 className="text-4xl font-bold text-center mt-12 mb-8 sm:my-24">About Me</h1>
             <p className="text-center text-sm text-muted-foreground mt-4 mb-12">
                 Get to know more about my background, skills, and professional journey in web development.
             </p>
