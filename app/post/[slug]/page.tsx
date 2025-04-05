@@ -1,7 +1,7 @@
 import CloudinaryImage from "@/components/cloudinary-image";
 import { Badge } from "@/components/ui/badge";
 import { getPosts } from "@/lib/contents";
-import { formatDate } from "@/lib/utils";
+import { formatDate, getOgImageUrl } from "@/lib/utils";
 import { Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: PostPageProps) {
         openGraph: {
             title: post.meta.title,
             description: post.meta.description || 'Read more about this topic.',
-            images: [`/api/og?title=${encodeURIComponent(post.meta.title)}`],
+            images: [getOgImageUrl(post.meta.title)],
             type: 'article',
         },
         twitter: {
             card: 'summary_large_image',
             title: post.meta.title,
             description: post.meta.description || 'Read more about this topic.',
-            images: [`/api/og?title=${encodeURIComponent(post.meta.title)}`],
+            images: [getOgImageUrl(post.meta.title)],
         },
     };
 }

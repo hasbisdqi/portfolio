@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle";
+import { getOgImageUrl } from "@/lib/utils";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
       siteName: "My Awesome Site",
       images: [
         {
-          url: "/api/og?title=My%20Awesome%20Site",
+          url: getOgImageUrl('My Awesome Site'),
           width: 1200,
           height: 630,
           alt: "My Awesome Site OG Image",

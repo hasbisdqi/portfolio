@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { getProjects } from "@/lib/contents"
 import CloudinaryImage from "@/components/cloudinary-image"
+import { getOgImageUrl } from "@/lib/utils"
 
 interface ProjectPageProps {
     params: Promise<{ slug: string }>;
@@ -16,30 +17,30 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({ params }: ProjectPageProps) {
     const { slug } = await params;
-    const posts = await getProjects();
-    const post = posts.find((p) => p.meta.slug === slug);
+    const projects = await getProjects();
+    const project = projects.find((p) => p.meta.slug === slug);
 
-    if (!post) {
+    if (!project) {
         return {
-            title: 'Post Not Found',
-            description: 'The requested post could not be found.',
+            title: 'project Not Found',
+            description: 'The requested project could not be found.',
         };
     }
 
     return {
-        title: post.meta.title,
-        description: post.meta.description || 'Read more about this topic.',
+        title: project.meta.title,
+        description: project.meta.description || 'Read more about this topic.',
         openGraph: {
-            title: post.meta.title,
-            description: post.meta.description || 'Read more about this topic.',
-            images: [`/api/og?title=${encodeURIComponent(post.meta.title)}`],
+            title: project.meta.title,
+            description: project.meta.description || 'Read more about this topic.',
+            images: [getOgImageUrl(project.meta.title)],
             type: 'article',
         },
         twitter: {
             card: 'summary_large_image',
-            title: post.meta.title,
-            description: post.meta.description || 'Read more about this topic.',
-            images: [`/api/og?title=${encodeURIComponent(post.meta.title)}`],
+            title: project.meta.title,
+            description: project.meta.description || 'Read more about this topic.',
+            images: [getOgImageUrl(project.meta.title)],
         },
     };
 }
