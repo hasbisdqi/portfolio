@@ -17,7 +17,7 @@ export async function GET(request: Request) {
             (
                 <div
                     style={{
-                        backgroundImage: 'url(http://localhost:3000/grainy-bg-1.jpeg)',
+                        backgroundImage: 'url(https://res.cloudinary.com/doj9hfdji/crYqVyOG_reb3rg.jpg)',
                         backgroundSize: '100% 100%',
                         height: '100%',
                         width: '100%',
