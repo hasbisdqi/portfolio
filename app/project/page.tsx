@@ -7,7 +7,7 @@ import CloudinaryImage from '@/components/cloudinary-image';
 export default async function page() {
     const projects = await getProjects();
     return (
-        <main className='px-4 mx-auto max-w-7xl relative min-h-screen sm:-mb-16 overflow-hidden'>
+        <main className='px-4 mx-auto max-w-7xl min-h-screen sm:-mb-16 overflow-hidden'>
             <div
                 className={cn(
                     "absolute inset-0 -z-1 size-[400px] sm:size-[700px] -left-1/6",
