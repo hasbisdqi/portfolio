@@ -240,7 +240,7 @@ export default function AboutPage() {
     const data = pageData
 
     return (
-        <main className="mx-auto max-w-7xl sm:px-4 overflow-hidden px-2 min-h-screen sm:-mb-16">
+        <main className="mx-auto max-w-7xl sm:px-4 overflow-hidden px-2 min-h-screen">
             <div
                 className={cn(
                     "fixed inset-0 -z-1 size-[700px] opacity-60",
@@ -251,7 +251,7 @@ export default function AboutPage() {
             >
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
             </div>
-            <h1 className="text-4xl font-bold text-center mt-12 mb-8 sm:my-24">About Me</h1>
+            <h1 className="text-4xl font-bold text-center mt-12 sm:mt-24">About Me</h1>
             <p className="text-center text-sm text-muted-foreground mt-4 mb-12">
                 Get to know more about my background, skills, and professional journey in web development.
             </p>
@@ -311,7 +311,7 @@ export default function AboutPage() {
                 </div>
             </Card>
 
-            <div className="grid gap-12">
+            <div className="space-y-12 mb-12">
                 {/* Skills Section */}
                 <section>
                     <h2 className="text-2xl font-bold mb-4">Skills</h2>
@@ -369,7 +369,7 @@ export default function AboutPage() {
                 {/* Contact Section */}
                 <section id="contact">
                     <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
-                    <div className="grid gap-6 md:grid-cols-2">
+                    <div className="md:grid space-y-6 md:gap-6 md:grid-cols-2 ">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Get In Touch</CardTitle>
@@ -392,7 +392,7 @@ export default function AboutPage() {
                                                     {method.url ? (
                                                         <Link
                                                             href={method.url}
-                                                            className="text-sm text-muted-foreground hover:underline flex items-center gap-1"
+                                                            className="text-sm text-muted-foreground hover:underline flex sm:flex-row flex-col sm:justify-start justify-center sm:items-center gap-1"
                                                             target={method.url.startsWith("http") ? "_blank" : undefined}
                                                         >
                                                             {method.value}
@@ -417,7 +417,7 @@ export default function AboutPage() {
                                         <Calendar className="h-4 w-4 inline mr-1" />
                                         <span>{data.contact.availability}</span>
                                     </p>
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 flex-wrap">
                                         {data.profile.socialLinks.map((link) => {
                                             const Icon = link.icon
                                             return (
