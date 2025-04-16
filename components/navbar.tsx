@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
 function Navbar({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <div className="lg:h-screen h-16 w-screen bottom-0 bg-background/30 backdrop-blur-sm border-r border-t border-border lg:w-16 fixed z-50">
+            <div className="print:hidden lg:h-screen h-16 w-screen bottom-0 bg-background/30 backdrop-blur-sm border-r border-t border-border lg:w-16 fixed z-50">
                 <div className="flex lg:flex-col items-center lg:justify-center justify-evenly gap-4 h-full">
                     <NavLink href={'/'}>
                         <HomeIcon />
@@ -25,7 +25,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
                     </NavLink>
                 </div>
             </div>
-            <div className="lg:ml-16 mb-16 lg:mb-0 min-h-screen">
+            <div className="print:hidden lg:ml-16 mb-16 lg:mb-0 min-h-screen">
                 {children}
                 <footer className="p-4 bg-background border-t border-border">
                     <div className="text-center text-sm text-muted-foreground">

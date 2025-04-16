@@ -61,7 +61,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
 
-          <div className="fixed right-0 m-2 z-50">
+          <div className="fixed right-0 m-2 z-50 print:hidden">
             <ModeToggle />
           </div>
           <Navbar>
