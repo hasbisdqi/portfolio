@@ -14,24 +14,24 @@ export const metadata: Metadata = {
     title: "About Me",
     description: "Learn more about me and what I do.",
     openGraph: {
-      title: "About Me",
-      description: "Learn more about me and what I do.",
-      images: [
-        {
-          url: getOgImageUrl('About Me'),
-          width: 1200,
-          height: 630,
-        },
-      ],
+        title: "About Me",
+        description: "Learn more about me and what I do.",
+        images: [
+            {
+                url: getOgImageUrl('About Me'),
+                width: 1200,
+                height: 630,
+            },
+        ],
     },
     twitter: {
-      card: "summary_large_image",
-      title: "About Me",
-      description: "Learn more about me and what I do.",
-      images: [getOgImageUrl('About Me')],
+        card: "summary_large_image",
+        title: "About Me",
+        description: "Learn more about me and what I do.",
+        images: [getOgImageUrl('About Me')],
     },
-  };
-  
+};
+
 
 // Define types for all data structures
 type SocialLink = {
@@ -67,6 +67,11 @@ type Experience = {
     description: string
 }
 
+type Achievement = {
+    title: string
+    period: string
+}
+
 type Education = {
     degree: string
     institution: string
@@ -93,6 +98,7 @@ type AboutPageData = {
     profile: ProfileData
     skillCategories: SkillCategory[]
     experiences: Experience[]
+    achievements: Achievement[]
     education: Education[]
     contact: ContactInfo
 }
@@ -104,10 +110,10 @@ const pageData: AboutPageData = {
         title: "Full Stack Developer",
         imageSrc: "/avatar.jpeg",
         bio: [
-            "Hello! I'm Hasbi, a passionate full-stack developer with over 5 years of experience building web applications. I specialize in creating responsive, user-friendly interfaces and robust backend systems.",
-            "My journey in software development began during my computer science studies, where I discovered my passion for creating digital solutions that solve real-world problems. Since then, I've worked with startups and established companies to deliver high-quality software products."
+            "Hello! I'm Hasbi, a passionate full-stack developer with around 4 years of experience in software development through academic studies, personal projects, and continuous learning.",
+            "My journey began in vocational high school majoring in Software Engineering (RPL), where I developed a strong foundation in web development. Now, as an Information Systems student, I continue to sharpen my skills by building real-world projects using modern technologies like React, Node.js, and more."
         ],
-        resumeUrl: "/resume.pdf",
+        resumeUrl: "https://docs.google.com/document/d/1UwrlveA4pVUxMA6qjox0oxS13XjNRRVGGS5H_K5DDZ8/edit?usp=sharing",
         email: "contact@example.com",
         socialLinks: [
             {
@@ -180,37 +186,70 @@ const pageData: AboutPageData = {
     ],
     experiences: [
         {
-            title: "Senior Frontend Developer",
-            company: "TechCorp Inc.",
+            title: "Freelance Full Stack Developer",
+            company: "Self-employed",
             period: "2021 - Present",
             description:
-                "Led the frontend development team in building a complex SaaS platform. Implemented modern React patterns and optimized performance. Mentored junior developers and established coding standards.",
+                "Worked on various freelance projects for clients, focusing on building responsive and dynamic web apps using React, Next.js, and Node.js.",
         },
         {
-            title: "Full Stack Developer",
-            company: "Innovate Solutions",
-            period: "2018 - 2021",
+            title: "Web Developer Intern",
+            company: "PT Global Intermedia",
+            period: "2022",
             description:
-                "Developed and maintained multiple client projects using React, Node.js, and MongoDB. Collaborated with designers and product managers to deliver high-quality web applications on time and within budget.",
+                "Assisted in developing and maintaining web-based applications. Gained experience in frontend and backend technologies in a real work environment.",
         },
         {
-            title: "Junior Web Developer",
-            company: "WebDev Agency",
-            period: "2016 - 2018",
+            title: "Cybersecurity Intern",
+            company: "PT Gmedia",
+            period: "2022",
             description:
-                "Started as an intern and quickly progressed to a full-time role. Built responsive websites for clients across various industries. Gained experience with HTML, CSS, JavaScript, and PHP.",
+                "Worked with the cybersecurity team to monitor and improve network security. Learned best practices in IT security and vulnerability assessment.",
+        },
+        {
+            title: "Software Development Student",
+            company: "SMK Muhammadiyah 1 Bantul (Software Engineering)",
+            period: "2021 - 2024",
+            description:
+                "Completed various school projects and participated in competitions related to web development and cybersecurity.",
+        },
+    ],
+    achievements: [
+        {
+            title: "2nd Place Cyber Security - LKS DIY",
+            period: "2021",
+        },
+        {
+            title: "1st Place Provincial Informatics Olympiad Olympicad",
+            period: "2021",
+        },
+        {
+            title: "Gold Medal National Informatics Olympiad Olympicad",
+            period: "2021",
+        },
+        {
+            title: "Web Technology LKS Mentor (3rd Place)",
+            period: "2022",
+        },
+        {
+            title: "President of Technopark Musaba School Community",
+            period: "2020 - 2022",
+        },
+        {
+            title: "Member of Jogja Cyber Security",
+            period: "2023 - Present",
         },
     ],
     education: [
         {
-            degree: "Master of Computer Science",
-            institution: "University of Technology",
-            period: "2014 - 2016",
+            degree: "Bachelor of Information Systems (Ongoing)",
+            institution: "UPN Veteran Yogyakarta",
+            period: "2024 - Present",
         },
         {
-            degree: "Bachelor of Science in Computer Science",
-            institution: "State University",
-            period: "2010 - 2014",
+            degree: "Vocational High School (Rekayasa Perangkat Lunak)",
+            institution: "SMK Muhammadiyah 1 Bantul",
+            period: "2021 - 2024",
         },
     ],
     contact: {
@@ -302,11 +341,11 @@ export default function AboutPage() {
                                 <p key={index}>{paragraph}</p>
                             ))}
                         </div>
-                        {/* <Button asChild>
+                        <Button asChild>
                             <Link href={data.profile.resumeUrl} target="_blank">
                                 Download Resume
                             </Link>
-                        </Button> */}
+                        </Button>
                     </div>
                 </div>
             </Card>
@@ -349,6 +388,22 @@ export default function AboutPage() {
                         ))}
                     </div>
                 </section>
+
+                {/* Achievements Section */}
+                <section>
+                    <h2 className="text-2xl font-bold mb-4">Achievements</h2>
+                    <div className="space-y-6">
+                        {data.achievements.map((achievement, index) => (
+                            <div key={index} className="border-l-2 border-yellow-500/50 pl-4 pb-2">
+                                <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
+                                    <h3 className="font-semibold">{achievement.title}</h3>
+                                    <span className="text-sm text-muted-foreground">{achievement.period}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
 
                 {/* Education Section */}
                 <section>
