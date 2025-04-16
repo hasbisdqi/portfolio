@@ -22,6 +22,9 @@ export async function POST(req: NextRequest) {
     const projectSlugs = projects.map((project) => `/project/${project.meta.slug}`);
 
     // Revalidate setiap post
+    revalidatePath('/');
+    revalidatePath('/post');
+    revalidatePath('/project');
     for (const slug of postSlugs) {
       revalidatePath(slug);
     }
