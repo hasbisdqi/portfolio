@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
 
     // Mengembalikan response sukses dengan jumlah path yang direvalidate
     return new Response(`Revalidated ${postSlugs.length + projectSlugs.length} paths`, { status: 200 });
-  } catch (err: any) {
+  } catch (err) {
     console.error(err);
-    return new Response(`Error: ${err.message}`, { status: 500 });
+    return new Response(`Error: ${err}`, { status: 500 });
   }
 }
