@@ -25,7 +25,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
                     </NavLink>
                 </div>
             </div>
-            <div className="print:hidden lg:ml-16 mb-16 lg:mb-0 min-h-screen">
+            <div className="lg:ml-16 mb-16 lg:mb-0 min-h-screen">
                 {children}
                 <footer className="p-4 bg-background border-t border-border">
                     <div className="text-center text-sm text-muted-foreground">
