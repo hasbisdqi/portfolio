@@ -82,18 +82,22 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 </div>
 
                 <div className="flex items-center gap-4 pt-2">
-                    <Button asChild>
-                        <a href={project.meta.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                            <ExternalLink className="h-4 w-4" />
-                            Live Demo
-                        </a>
-                    </Button>
-                    <Button variant="outline" asChild>
-                        <a href={project.meta.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                            <Github className="h-4 w-4" />
-                            View Code
-                        </a>
-                    </Button>
+                    {project.meta.liveUrl ?
+                        <Button asChild>
+                            <a href={project.meta.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                <ExternalLink className="h-4 w-4" />
+                                Live Demo
+                            </a>
+                        </Button>
+                        : ''}
+                    {project.meta.githubUrl ?
+                        <Button variant="outline" asChild>
+                            <a href={project.meta.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                <Github className="h-4 w-4" />
+                                View Code
+                            </a>
+                        </Button>
+                        : ''}
                 </div>
             </div>
 

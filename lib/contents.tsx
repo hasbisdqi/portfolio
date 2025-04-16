@@ -90,7 +90,7 @@ export async function getPosts() {
             content: content,
         });
     }
-    return posts.sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
+    return posts.filter((item) => item.meta.published).sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
 }
 
 export async function getProjectFiles() {
