@@ -29,7 +29,7 @@ export default async function CloudinaryImage({
 
     if (isFullUrl) {
         // Ambil cloudName dari URL jika tidak diberikan
-        const extractedCloudName = src.match(/res\.cloudinary\.com\/([^/]+)/)?.[1];
+        // const extractedCloudName = src.match(/res\.cloudinary\.com\/([^/]+)/)?.[1];
         const urlHasUpload = src.includes("/upload/");
 
         fullSrc = src;
