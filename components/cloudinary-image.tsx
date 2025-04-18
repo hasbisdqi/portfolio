@@ -19,12 +19,33 @@ export default async function CloudinaryImage({
   sizes,
   ...props
 }: CloudinaryImageProps) {
+
   if (!src) return null;
   src = src.trim();
 
-  const baseURL = `https://res.cloudinary.com/${cloudName}/`;
-  const fullSrc = src.startsWith("http") ? src : `${baseURL}${src}`;
-  const blurSrc = await toDataURL(`${baseURL}w_10,h_10,q_20,f_auto/${src}`);
+  const isFullUrl = src.startsWith("http");
+  let fullSrc = "";
+  let blurSrc = "";
+
+  if (isFullUrl) {
+    // Ambil cloudName dari URL jika tidak diberikan
+    const extractedCloudName = src.match(/res\.cloudinary\.com\/([^/]+)/)?.[1];
+    const urlHasUpload = src.includes("/upload/");
+    
+    fullSrc = src;
+
+    // Sisipkan transformasi setelah "/upload/"
+    if (urlHasUpload) {
+      blurSrc = src.replace("/upload/", "/upload/w_10,h_10,q_20,f_auto/");
+    } else {
+      // fallback aman
+      blurSrc = src;
+    }
+  } else {
+    const baseURL = `https://res.cloudinary.com/${cloudName}/`;
+    fullSrc = `${baseURL}${src}`;
+    blurSrc = `${baseURL}w_10,h_10,q_20,f_auto/${src}`;
+  }
 
   // Jika tidak pakai fill, jangan pakai <div> agar aman di <p>
   if (!fill) {
