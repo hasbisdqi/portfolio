@@ -5,50 +5,42 @@ import rehypeSlug from 'rehype-slug';
 import { getReadingTime } from './utils';
 import CloudinaryImage from '@/components/cloudinary-image';
 import React from 'react';
+import { Client } from '@notionhq/client';
+import { NotionToMarkdown } from 'notion-to-md';
 
-export async function GetGitTree() {
-    const res = await fetch('https://api.github.com/repos/hasbisdqi/portfolio-contents/git/trees/main', {
-        headers: {
-            'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
-            'Accept': 'application/vnd.github.v3+json'
-        }
-    });
-    if (!res.ok) {
-        return res.status
-    }
-    const data = res.json();
-    return data;
-}
-
-async function FetchGithub(treeUrl: string) {
-    const res = await fetch(treeUrl, {
-        headers: {
-            'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
-            'Accept': 'application/vnd.github.v3+json'
-        }
-    });
-    if (!res.ok) {
-        throw new Error('Gagal mengambil sub tree dari GitHub');
-    }
-    const data = await res.json();
-    return data;
-}
-
-export async function getPostFiles() {
-    const data = await FetchGithub('https://api.github.com/repos/hasbisdqi/portfolio-contents/contents/post')
-    return data.map((d: { path: string }) => d.path)
-}
+const notion = new Client({ auth: process.env.NOTION_API });
+const n2m = new NotionToMarkdown({ notionClient: notion });
+const dbUrl = process.env.DB_ID || '';
+const dbIdMatch = dbUrl.match(/\/p\/([a-zA-Z0-9]+)/);
+const dbId = dbIdMatch ? dbIdMatch[1] : dbUrl;
 
 export async function getPosts() {
-    const files = await getPostFiles();
+    const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${process.env.NOTION_API}`,
+            'Notion-Version': '2022-06-28',
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!res.ok) throw new Error("Gagal mengambil data dari Notion: " + await res.text());
+    const data = await res.json();
     const posts: PostContent[] = [];
 
-    for (const filePath of files) {
+    for (const page of data.results) {
+        const props = page.properties;
+        const title = props.title?.title?.[0]?.plain_text || props.Name?.title?.[0]?.plain_text || '';
+        const slug = props.slug?.rich_text?.[0]?.plain_text || page.id;
+        const description = props.description?.rich_text?.[0]?.plain_text || '';
+        const date = props.date?.date?.start || '';
+        const tags = props.tags?.multi_select?.map((t: { name: string }) => t.name) || [];
+        const published = props.published?.checkbox ?? false;
+        const coverImage = props.coverImage?.url || '';
 
-        const rawUrl = `https://api.github.com/repos/hasbisdqi/portfolio-contents/contents/${filePath}`;
-        const rawContent = await FetchGithub(rawUrl);
-        const rawMDX = Buffer.from(rawContent.content, 'base64').toString();
-        const { frontmatter, content } = await compileMDX<{
+        const mdblocks = await n2m.pageToMarkdown(page.id);
+        const rawMDX = n2m.toMarkdownString(mdblocks).parent || '';
+
+        const { content } = await compileMDX<{
             title: string,
             description: string,
             date: string,
@@ -61,7 +53,7 @@ export async function getPosts() {
                 img: (props) => <CloudinaryImage className="max-w-full h-auto rounded-lg" src={props.src ?? ''} {...props} width={800} height={600} />
             },
             options: {
-                parseFrontmatter: true,
+                parseFrontmatter: false,
                 mdxOptions: {
                     rehypePlugins: [
                         [rehypePrettyCode, {
@@ -74,18 +66,18 @@ export async function getPosts() {
                     ],
                 },
             }
-        })
+        });
 
         posts.push({
             meta: {
-                slug: frontmatter.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''),
-                title: frontmatter.title,
-                description: frontmatter.description,
-                date: frontmatter.date,
+                slug,
+                title,
+                description,
+                date,
                 readTime: getReadingTime(rawMDX),
-                cover: frontmatter.coverImage,
-                published: frontmatter.published,
-                tags: frontmatter.tags,
+                cover: coverImage,
+                published,
+                tags,
             },
             content: content,
         });
@@ -93,21 +85,43 @@ export async function getPosts() {
     return posts.filter((item) => item.meta.published).sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
 }
 
-export async function getProjectFiles() {
-    const data = await FetchGithub('https://api.github.com/repos/hasbisdqi/portfolio-contents/contents/project')
-    return data.map((d: { path: string }) => d.path)
-}
+const projectDbUrl = process.env.PROJECT_DB_ID || '';
+const projectDbIdMatch = projectDbUrl.match(/\/p\/([a-zA-Z0-9]+)/);
+const projectDbId = projectDbIdMatch ? projectDbIdMatch[1] : projectDbUrl;
 
 export async function getProjects() {
-    const files = await getProjectFiles();
+    const res = await fetch(`https://api.notion.com/v1/databases/${projectDbId}/query`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${process.env.NOTION_API}`,
+            'Notion-Version': '2022-06-28',
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!res.ok) throw new Error("Gagal mengambil data project dari Notion: " + await res.text());
+    const data = await res.json();
     const projects: ProjectContent[] = [];
 
-    for (const filePath of files) {
+    for (const page of data.results) {
+        const props = page.properties;
+        const title = props.title?.title?.[0]?.plain_text || props.Name?.title?.[0]?.plain_text || '';
+        const slug = props.slug?.rich_text?.[0]?.plain_text || page.id;
+        const description = props.description?.rich_text?.[0]?.plain_text || '';
+        const coverImage = props.coverImage?.url || '';
+        const technologies = props.technologies?.multi_select?.map((t: { name: string }) => t.name) || [];
+        const liveUrl = props.liveUrl?.url || '';
+        const githubUrl = props.githubUrl?.url || '';
+        const year = props.year?.rich_text?.[0]?.plain_text || '';
+        const duration = props.duration?.rich_text?.[0]?.plain_text || '';
+        const client = props.client?.rich_text?.[0]?.plain_text || '';
+        const role = props.role?.rich_text?.[0]?.plain_text || '';
+        const imagesStr = props.images?.rich_text?.[0]?.plain_text || '';
+        const images = imagesStr ? imagesStr.split(',').map((s: string) => s.trim()) : [];
 
-        const rawUrl = `https://api.github.com/repos/hasbisdqi/portfolio-contents/contents/${filePath}`;
-        const rawContent = await FetchGithub(rawUrl);
-        const rawMDX = Buffer.from(rawContent.content, 'base64').toString();
-        const { frontmatter, content } = await compileMDX<{
+        const mdblocks = await n2m.pageToMarkdown(page.id);
+        const rawMDX = n2m.toMarkdownString(mdblocks).parent || '';
+
+        const { content } = await compileMDX<{
             slug: string,
             title: string,
             description: string,
@@ -126,7 +140,7 @@ export async function getProjects() {
                 img: (props) => <CloudinaryImage className="max-w-full h-auto rounded-lg" src={props.src ?? ''} {...props} width={800} height={600} />
             },
             options: {
-                parseFrontmatter: true,
+                parseFrontmatter: false,
                 mdxOptions: {
                     rehypePlugins: [
                         [rehypePrettyCode, {
@@ -139,22 +153,22 @@ export async function getProjects() {
                     ],
                 },
             },
-        })
+        });
 
         projects.push({
             meta: {
-                slug: frontmatter.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''),
-                title: frontmatter.title,
-                description: frontmatter.description,
-                coverImage: frontmatter.coverImage,
-                technologies: frontmatter.technologies,
-                liveUrl: frontmatter.liveUrl,
-                githubUrl: frontmatter.githubUrl,
-                year: frontmatter.year,
-                duration: frontmatter.duration,
-                client: frontmatter.client,
-                role: frontmatter.role,
-                images: frontmatter.images,
+                slug,
+                title,
+                description,
+                coverImage,
+                technologies,
+                liveUrl,
+                githubUrl,
+                year,
+                duration,
+                client,
+                role,
+                images,
             },
             content: content,
         });
