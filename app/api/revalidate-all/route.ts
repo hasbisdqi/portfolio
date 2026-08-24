@@ -13,9 +13,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const hasNotionApi = !!process.env.NOTION_API;
+    const hasDbId = !!process.env.DB_ID;
+    const hasProjDbId = !!process.env.PROJECT_DB_ID;
+    
     // Ambil data posts dan projects
-    const posts = await getPosts(); // Ambil semua post dari GitHub
-    const projects = await getProjects(); // Ambil semua project dari GitHub
+    const posts = await getPosts(); // Ambil semua post dari Notion
+    const projects = await getProjects(); // Ambil semua project dari Notion
 
     // Ambil slug dari posts dan projects untuk direvalidate
     const postSlugs = posts.map((post) => `/post/${post.meta.slug}`);
@@ -34,10 +38,16 @@ export async function POST(req: NextRequest) {
       revalidatePath(slug);
     }
 
-    // Mengembalikan response sukses dengan jumlah path yang direvalidate
-    return new Response(`Revalidated ${postSlugs.length + projectSlugs.length} paths`, { status: 200 });
+    return Response.json({
+      status: 'success',
+      env_check: { hasNotionApi, hasDbId, hasProjDbId },
+      posts_count: posts.length,
+      projects_count: projects.length,
+      postSlugs,
+      projectSlugs,
+    });
   } catch (err) {
     console.error(err);
-    return new Response(`Error: ${err}`, { status: 500 });
+    return new Response(`Error: ${err instanceof Error ? err.message : String(err)}`, { status: 500 });
   }
 }
