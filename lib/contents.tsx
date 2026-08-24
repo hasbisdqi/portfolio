@@ -15,6 +15,10 @@ const dbIdMatch = dbUrl.match(/\/p\/([a-zA-Z0-9]+)/);
 const dbId = dbIdMatch ? dbIdMatch[1] : dbUrl;
 
 export async function getPosts() {
+    if (!process.env.NOTION_API || !dbId) {
+        console.warn("NOTION_API or DB_ID not configured, returning empty posts");
+        return [];
+    }
     const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
         method: 'POST',
         headers: {
@@ -90,6 +94,10 @@ const projectDbIdMatch = projectDbUrl.match(/\/p\/([a-zA-Z0-9]+)/);
 const projectDbId = projectDbIdMatch ? projectDbIdMatch[1] : projectDbUrl;
 
 export async function getProjects() {
+    if (!process.env.NOTION_API || !projectDbId) {
+        console.warn("NOTION_API or PROJECT_DB_ID not configured, returning empty projects");
+        return [];
+    }
     const res = await fetch(`https://api.notion.com/v1/databases/${projectDbId}/query`, {
         method: 'POST',
         headers: {
