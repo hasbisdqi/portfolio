@@ -1,13 +1,18 @@
 import CloudinaryImage from "@/components/cloudinary-image";
 import { Badge } from "@/components/ui/badge";
-import { getPosts } from "@/lib/contents";
+import { getPosts, getPostBySlug } from "@/lib/contents";
 import { formatDate, getOgImageUrl } from "@/lib/utils";
 import { Calendar, Clock } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-    const posts = await getPosts()
+    const posts = await getPosts();
     return posts.map((post) => ({ slug: post.meta.slug }));
+}
+
+interface PostPageProps {
+    params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PostPageProps) {
@@ -40,16 +45,11 @@ export async function generateMetadata({ params }: PostPageProps) {
     };
 }
 
-interface PostPageProps {
-    params: Promise<{ slug: string }>;
-}
-
 export default async function PostPage({ params }: PostPageProps) {
     const { slug } = await params;
-    const posts = await getPosts()
-    const post = posts.find((p) => p.meta.slug === slug);
+    const post = await getPostBySlug(slug);
     if (!post) {
-        return <div>Post not found</div>;
+        notFound();
     }
 
     return (
@@ -81,11 +81,19 @@ export default async function PostPage({ params }: PostPageProps) {
                     </div>
                 </div>
 
-                <div className="relative w-full mb-8 overflow-hidden rounded-lg aspect-video">
-                    <CloudinaryImage src={post.meta.cover}  alt={post.meta.title} fill className="object-cover"/>
-                </div>
+                {post.meta.cover && (
+                    <div className="mb-8 overflow-hidden rounded-lg">
+                        <CloudinaryImage
+                            src={post.meta.cover}
+                            alt={post.meta.title}
+                            width={1200}
+                            height={630}
+                            className="w-full h-auto object-cover max-h-[400px]"
+                        />
+                    </div>
+                )}
 
-                <div className="prose prose-lg max-w-none dark:prose-invert">
+                <div className="prose prose-neutral dark:prose-invert max-w-none">
                     {post.content}
                 </div>
             </div>
