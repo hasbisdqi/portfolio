@@ -336,7 +336,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="p-8 md:w-2/3">
-                        <div className="prose dark:prose-invert max-w-none mb-6">
+                        <div className="typeset typeset-docs max-w-[37em] mb-6">
                             {data.profile.bio.map((paragraph, index) => (
                                 <p key={index}>{paragraph}</p>
                             ))}

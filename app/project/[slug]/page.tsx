@@ -97,7 +97,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <div className="md:col-span-2 space-y-6">
                     <h2 className="text-2xl font-bold">About the Project</h2>
-                    <div className="prose prose-neutral dark:prose-invert max-w-none">
+                    <div className="typeset typeset-docs max-w-[37em]">
                         {project.content}
                     </div>
                 </div>

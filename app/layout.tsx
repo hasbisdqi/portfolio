@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle";
 import { getOgImageUrl } from "@/lib/utils";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
   variable: "--font-geist-mono",
-  weight: "100 900",
 });
 
 export const metadata: Metadata = {
@@ -50,10 +49,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className="antialiased font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
