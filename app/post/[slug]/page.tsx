@@ -62,38 +62,38 @@ export default async function PostPage({ params }: PostPageProps) {
                     >
                         ← Back to all posts
                     </Link>
-                    <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">{post.meta.title}</h1>
+                    <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl text-foreground leading-snug">{post.meta.title}</h1>
 
-                    <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
+                    <div className="flex flex-wrap items-center gap-3 mt-3 text-xs sm:text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5" />
                             <time dateTime={post.meta.date}>{formatDate(post.meta.date)}</time>
                         </div>
-                        <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
+                        <div className="flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5" />
                             <span>{post.meta.readTime}</span>
                         </div>
-                        <div className="flex gap-1 flex-wrap">
+                        <div className="flex gap-1.5 flex-wrap">
                             {post.meta.tags?.map((i) => (
-                                <Badge key={i} variant="secondary">{i}</Badge>
+                                <Badge key={i} variant="secondary" className="text-xs px-2 py-0.5 font-normal">{i}</Badge>
                             ))}
                         </div>
                     </div>
                 </div>
 
                 {post.meta.cover && (
-                    <div className="mb-8 overflow-hidden rounded-lg">
+                    <div className="mb-8 overflow-hidden rounded-xl border border-border/40 shadow-sm">
                         <CloudinaryImage
                             src={post.meta.cover}
                             alt={post.meta.title}
                             width={1200}
                             height={630}
-                            className="w-full h-auto object-cover max-h-[400px]"
+                            className="w-full h-auto object-cover max-h-[380px]"
                         />
                     </div>
                 )}
 
-                <div className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed prose-headings:tracking-tight prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-7 prose-p:my-4 prose-code:font-mono prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-xl prose-pre:border prose-pre:border-border/60 prose-li:my-1 prose-img:rounded-xl prose-img:shadow-md">
+                <div className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed prose-headings:tracking-tight prose-headings:font-bold prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-3 prose-h3:text-lg sm:prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-2 prose-p:leading-7 prose-p:my-3 prose-code:font-mono prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-xs sm:prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-xl prose-pre:border prose-pre:border-border/60 prose-li:my-0.5 prose-img:rounded-xl prose-img:shadow-md">
                     {post.content}
                 </div>
             </div>

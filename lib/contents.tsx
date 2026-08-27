@@ -48,7 +48,7 @@ export async function getPosts(): Promise<PostContent[]> {
         const slug = props.slug?.rich_text?.[0]?.plain_text || page.id;
         const description = props.description?.rich_text?.[0]?.plain_text || '';
         const date = props.date?.date?.start || '';
-        const tags = props.tags?.multi_select?.map((t: { name: string }) => t.name) || [];
+        const tags = props.tags?.multi_select?.map((t: { name: string }) => t.name.replace(/^["']|["']$/g, '').trim()) || [];
         const published = props.published?.checkbox ?? false;
         const coverImage = props.coverImage?.url || '';
 
