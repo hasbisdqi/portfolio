@@ -28,17 +28,14 @@ export default async function CloudinaryImage({
     let blurSrc = "";
 
     if (isFullUrl) {
-        // Ambil cloudName dari URL jika tidak diberikan
-        // const extractedCloudName = src.match(/res\.cloudinary\.com\/([^/]+)/)?.[1];
-        const urlHasUpload = src.includes("/upload/");
-
         fullSrc = src;
+        const urlHasUpload = src.includes("/upload/") && src.includes("res.cloudinary.com");
 
-        // Sisipkan transformasi setelah "/upload/"
+        // Sisipkan transformasi Cloudinary jika benar berasal dari Cloudinary
         if (urlHasUpload) {
             blurSrc = await toDataURL(src.replace("/upload/", "/upload/w_10,h_10,q_20,f_auto/"));
         } else {
-            // fallback aman
+            // fallback aman untuk URL luar seperti Unsplash atau domain lain
             blurSrc = await toDataURL(src);
         }
     } else {
