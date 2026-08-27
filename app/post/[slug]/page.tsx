@@ -93,7 +93,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     </div>
                 )}
 
-                <div className="prose prose-neutral dark:prose-invert max-w-none">
+                <div className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed prose-headings:tracking-tight prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-7 prose-p:my-4 prose-code:font-mono prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-pre:rounded-xl prose-pre:border prose-pre:border-border/60 prose-li:my-1 prose-img:rounded-xl prose-img:shadow-md">
                     {post.content}
                 </div>
             </div>
