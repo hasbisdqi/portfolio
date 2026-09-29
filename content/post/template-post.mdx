@@ -1,0 +1,94 @@
+---
+title: "Template Panduan Menulis Artikel Teknis"
+slug: "template-panduan-menulis-post"
+description: "Template referensi penulisan artikel blog/notes teknis yang memanfaatkan syntax highlight Shiki, heading anchor, dan typeset typography."
+date: "2026-03-30"
+tags: ["Architecture", "Engineering", "Next.js", "Guide"]
+published: true
+coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+---
+
+# Template Panduan Menulis Artikel
+
+Ini adalah template referensi untuk menulis konten artikel teknis atau catatan arsitektur perangkat lunak. Konten ini dirender secara otomatis menggunakan `shadcn/typeset` dan syntax highlighter Shiki.
+
+---
+
+## 1. Struktur Heading & Anchor Otomatis
+
+Setiap heading `##` dan `###` otomatis mendapatkan ID slug dan efek hovering link anchor:
+
+### Sub-bagian: Konsep Inti
+Gunakan sub-heading untuk membagi topik menjadi sub-modul yang mudah dibaca.
+
+- **Poin 1**: Penjelasan konsep dengan teks tebal.
+- **Poin 2**: Penjelasan variabel kode seperti `useState()` atau `Server Component`.
+- **Poin 3**: Referensi link internal atau eksternal.
+
+---
+
+## 2. Code Block & Syntax Highlighting
+
+Sistem menggunakan `rehype-pretty-code` dengan dual-theme *Vitesse*. Cukup tentukan bahasa di awal triple backticks:
+
+### Contoh TypeScript / React:
+```tsx
+import React, { useState, useEffect } from "react";
+
+interface UserProfileProps {
+    userId: string;
+    role: "admin" | "engineer" | "guest";
+}
+
+export const UserProfile = ({ userId, role }: UserProfileProps) => {
+    const [status, setStatus] = useState<"idle" | "loading" | "ready">("idle");
+
+    useEffect(() => {
+        console.log(`[SYS] Initializing user profile session: ${userId}`);
+        setStatus("ready");
+    }, [userId]);
+
+    return (
+        <div className="p-4 rounded-xl border border-primary/20 bg-card">
+            <span className="font-mono text-xs text-primary font-bold">ROLE: {role}</span>
+            <p className="text-muted-foreground text-sm">Status: {status}</p>
+        </div>
+    );
+};
+```
+
+### Contoh Terminal / Bash:
+```bash
+# Clone repository
+git clone https://github.com/hasbisdqi/portfolio.git
+
+# Install dependencies
+bun install
+
+# Run dev server
+bun run dev
+```
+
+---
+
+## 3. Blockquote & Catatan Teknis
+
+> **Tip Arsitektur**: Selalu pisahkan boundary antara Server Components dan Client Components untuk menjaga performa JavaScript bundle sekecil mungkin.
+
+---
+
+## 4. Format Tabel Data
+
+| Metrik | Sebelum Optimasi | Sesudah Optimasi | Peningkatan |
+| :--- | :--- | :--- | :--- |
+| **First Contentful Paint** | 1.8s | 0.4s | **+77%** |
+| **Lighthouse Score** | 78 | 100 | **+28%** |
+| **Bundle Size** | 420 KB | 85 KB | **-80%** |
+
+---
+
+## 5. Menampilkan Gambar / Diagram
+
+Gambar di dalam artikel secara otomatis dioptimalkan:
+
+![Engineering Blueprint Example](https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80)

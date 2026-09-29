@@ -1,0 +1,74 @@
+---
+title: "Template Studi Kasus Proyek & Blueprint Arsitektur"
+slug: "template-studi-kasus-proyek"
+description: "Template referensi studi kasus proyek lengkap yang memanfaatkan Tech Blueprint, Screenshots Gallery modal, Lifecycle Timeline, dan Specs sidecar."
+coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+technologies:
+  - "Next.js"
+  - "React"
+  - "TypeScript"
+  - "Tailwind CSS"
+  - "PostgreSQL"
+  - "Node.js"
+  - "Docker"
+  - "Turbopack"
+liveUrl: "https://rnghbt.me"
+githubUrl: "https://github.com/hasbisdqi/portfolio"
+year: "2026"
+duration: "6 Weeks"
+client: "Internal / Enterprise Corp"
+role: "Lead Fullstack Architect"
+images:
+  - "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+  - "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80"
+  - "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+---
+
+# Ringkasan Studi Kasus & Latar Belakang
+
+Dokumentasikan gambaran umum platform, latar belakang masalah bisnis yang ingin diselesaikan, serta tujuan utama dari rekayasa sistem ini.
+
+---
+
+## 1. Tantangan & Kebutuhan Sistem
+
+- **Tantangan 1**: Mengurangi response time API di bawah 100ms dengan beban request concurent tinggi.
+- **Tantangan 2**: Mengimplementasikan micro-interactions 60fps tanpa menyebabkan layout shift pada rendering browser.
+- **Tantangan 3**: Menjaga isolasi lingkungan container database dan zero downtime deployment.
+
+---
+
+## 2. Keputusan Desain & Arsitektur Teknis
+
+Jelaskan alasan pemilihan teknologi dan bagaimana arsitektur data dirancang:
+
+```typescript
+// Contoh implementasi service cache layer
+export async function getCachedProjectData(projectId: string) {
+    const cacheKey = `project:data:${projectId}`;
+    const cached = await redis.get(cacheKey);
+    if (cached) return JSON.parse(cached);
+
+    const freshData = await db.query.projects.findFirst({
+        where: eq(projects.id, projectId),
+        with: { dependencies: true, metrics: true }
+    });
+
+    await redis.set(cacheKey, JSON.stringify(freshData), { ex: 3600 });
+    return freshData;
+}
+```
+
+---
+
+## 3. Hasil & Dampak Metrik (Key Results)
+
+1. **Efisiensi Cache**: Peningkatan throughput sistem hingga 4.5x lipat.
+2. **Pengalaman Pengguna**: Peningkatan engagement user sebesar 60% berkat responsive feedback dan keyboard shortcuts.
+3. **Keandalan**: Uptime server 99.9% dengan CI/CD deployment otomatis.
+
+---
+
+## 4. Kesimpulan & Pelajaran Teknis
+
+Tuliskan evaluasi pasca rilis, hal-hal yang dipelajari selama proses development, serta rencana iterasi fitur untuk masa mendatang.
