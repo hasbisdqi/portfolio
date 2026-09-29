@@ -1,506 +1,394 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Calendar, ExternalLink, Github, Linkedin, Mail, Twitter, type LucideIcon } from "lucide-react"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
-import { cn, getOgImageUrl } from "@/lib/utils"
-import ContactForm from "./contact-form"
-import { Metadata } from "next"
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { 
+    Sparkles, 
+    ShieldCheck, 
+    Zap, 
+    Code2, 
+    Layers, 
+    Trophy, 
+    Briefcase, 
+    GraduationCap, 
+    Mail, 
+    Github, 
+    Linkedin, 
+    Twitter, 
+    Copy, 
+    Check, 
+    ExternalLink,
+    ChevronRight,
+    TerminalSquare
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import ContactForm from "./contact-form";
 
-export const metadata: Metadata = {
-    title: "About Me",
-    description: "Learn more about me and what I do.",
-    openGraph: {
-        title: "About Me",
-        description: "Learn more about me and what I do.",
-        images: [
-            {
-                url: getOgImageUrl('About Me'),
-                width: 1200,
-                height: 630,
-            },
-        ],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "About Me",
-        description: "Learn more about me and what I do.",
-        images: [getOgImageUrl('About Me')],
-    },
-};
+export default function VisualStoryAboutPage() {
+    const [copiedEmail, setCopiedEmail] = useState(false);
+    const [selectedPerk, setSelectedPerk] = useState<number>(0);
+    const [skillFilter, setSkillFilter] = useState<string>("All");
 
+    const handleCopy = () => {
+        navigator.clipboard.writeText("muhhasbiassidiqi18@gmail.com");
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2000);
+    };
 
-// Define types for all data structures
-type SocialLink = {
-    platform: string
-    url: string
-    icon: LucideIcon
-    username: string
-}
+    const perks = [
+        {
+            title: "Cybersecurity DNA",
+            badge: "LKS Silver Medalist",
+            desc: "Bukan sekadar styling frontend — punya pondasi kuat di security vulnerability, secure API auth, dan network hardening.",
+            icon: ShieldCheck,
+            color: "text-blue-400 bg-blue-500/10 border-blue-500/20"
+        },
+        {
+            title: "Fullstack Versatility",
+            badge: "Next.js + Node + SQL",
+            desc: "Menghubungkan arsitektur server Next.js App Router, caching layer, database relational, hingga deployment Turbopack.",
+            icon: Layers,
+            color: "text-purple-400 bg-purple-500/10 border-purple-500/20"
+        },
+        {
+            title: "60fps Fluid Interactions",
+            badge: "Motion & Canvas Craft",
+            desc: "Obsesi pada micro-interactions, responsive physics, dan animasi canvas interaktif yang tidak membebani render thread.",
+            icon: Zap,
+            color: "text-amber-400 bg-amber-500/10 border-amber-500/20"
+        }
+    ];
 
-type ProfileData = {
-    name: string
-    title: string
-    imageSrc: string
-    bio: string[]
-    resumeUrl: string
-    email: string
-    socialLinks: SocialLink[]
-}
+    const allSkills = [
+        { name: "React", tier: "Core", level: 95 },
+        { name: "Next.js", tier: "Core", level: 92 },
+        { name: "TypeScript", tier: "Core", level: 88 },
+        { name: "Tailwind CSS", tier: "Core", level: 95 },
+        { name: "Node.js", tier: "Backend", level: 85 },
+        { name: "PostgreSQL", tier: "Backend", level: 80 },
+        { name: "Express", tier: "Backend", level: 82 },
+        { name: "MongoDB", tier: "Backend", level: 78 },
+        { name: "Docker", tier: "DevOps", level: 75 },
+        { name: "Git", tier: "DevOps", level: 90 },
+        { name: "Figma", tier: "Design", level: 85 },
+        { name: "Responsive UI", tier: "Design", level: 95 },
+    ];
 
-type Skill = {
-    name: string
-}
-
-type SkillCategory = {
-    name: string
-    skills: Skill[]
-}
-
-type Experience = {
-    title: string
-    company: string
-    period: string
-    description: string
-}
-
-type Achievement = {
-    title: string
-    period: string
-}
-
-type Education = {
-    degree: string
-    institution: string
-    period: string
-}
-
-type ContactMethod = {
-    type: string
-    value: string
-    icon: LucideIcon
-    url?: string
-    label?: string
-}
-
-type ContactInfo = {
-    email: string
-    linkedin: string
-    availability: string
-    methods: ContactMethod[]
-}
-
-// Define the complete page data structure
-type AboutPageData = {
-    profile: ProfileData
-    skillCategories: SkillCategory[]
-    experiences: Experience[]
-    achievements: Achievement[]
-    education: Education[]
-    contact: ContactInfo
-}
-
-// Internal data source
-const pageData: AboutPageData = {
-    profile: {
-        name: "Hasbi Assidiqi",
-        title: "Full Stack Developer",
-        imageSrc: "/avatar.jpeg",
-        bio: [
-            "Hello! I'm Hasbi, a passionate full-stack developer with around 4 years of experience in software development through academic studies, personal projects, and continuous learning.",
-            "My journey began in vocational high school majoring in Software Engineering (RPL), where I developed a strong foundation in web development. Now, as an Information Systems student, I continue to sharpen my skills by building real-world projects using modern technologies like React, Node.js, and more."
-        ],
-        resumeUrl: "https://docs.google.com/document/d/1UwrlveA4pVUxMA6qjox0oxS13XjNRRVGGS5H_K5DDZ8/edit?usp=sharing",
-        email: "contact@example.com",
-        socialLinks: [
-            {
-                platform: "GitHub",
-                url: "https://github.com/hasbisdqi",
-                icon: Github,
-                username: "hasbisdqi",
-            },
-            {
-                platform: "LinkedIn",
-                url: "https://linkedin.com/in/rnghbt",
-                icon: Linkedin,
-                username: "linkedin.com/in/rnghbt",
-            },
-            {
-                platform: "Twitter",
-                url: "https://twitter.com/rnghbt",
-                icon: Twitter,
-                username: "@rnghbt",
-            },
-            {
-                platform: "Email",
-                url: "mailto:muhhasbiassidqi18@gmail.com",
-                icon: Mail,
-                username: "muhhasbiassidqi18@gmail.com",
-            },
-        ],
-    },
-    skillCategories: [
-        {
-            name: "Expert",
-            skills: [
-                { name: "React" },
-                { name: "Next.js" },
-                { name: "JavaScript" },
-                { name: "Tailwind CSS" },
-                { name: "HTML/CSS" },
-                { name: "Git" },
-            ],
-        },
-        {
-            name: "Proficient",
-            skills: [
-                { name: "TypeScript" },
-                { name: "Node.js" },
-                { name: "Express" },
-                { name: "PostgreSQL" },
-                { name: "MongoDB" },
-            ],
-        },
-        {
-            name: "Familiar",
-            skills: [
-                { name: "GraphQL" },
-                { name: "Docker" },
-                { name: "AWS" },
-                { name: "Firebase" },
-                { name: "Jest" },
-                { name: "Cypress" },
-            ],
-        },
-        {
-            name: "Tools & Others",
-            skills: [
-                { name: "VS Code" },
-                { name: "Figma" },
-                { name: "Responsive Design" },
-            ],
-        },
-    ],
-    experiences: [
-        {
-            title: "Freelance Full Stack Developer",
-            company: "Self-employed",
-            period: "2021 - Present",
-            description:
-                "Worked on various freelance projects for clients, focusing on building responsive and dynamic web apps using React, Next.js, and Node.js.",
-        },
-        {
-            title: "Web Developer Intern",
-            company: "PT Global Intermedia",
-            period: "2022",
-            description:
-                "Assisted in developing and maintaining web-based applications. Gained experience in frontend and backend technologies in a real work environment.",
-        },
-        {
-            title: "Cybersecurity Intern",
-            company: "PT Gmedia",
-            period: "2022",
-            description:
-                "Worked with the cybersecurity team to monitor and improve network security. Learned best practices in IT security and vulnerability assessment.",
-        },
-        {
-            title: "Software Development Student",
-            company: "SMK Muhammadiyah 1 Bantul (Software Engineering)",
-            period: "2021 - 2024",
-            description:
-                "Completed various school projects and participated in competitions related to web development and cybersecurity.",
-        },
-    ],
-    achievements: [
-        {
-            title: "2nd Place Cyber Security - LKS DIY",
-            period: "2021",
-        },
-        {
-            title: "1st Place Provincial Informatics Olympiad Olympicad",
-            period: "2021",
-        },
-        {
-            title: "Gold Medal National Informatics Olympiad Olympicad",
-            period: "2021",
-        },
-        {
-            title: "Web Technology LKS Mentor (3rd Place)",
-            period: "2022",
-        },
-        {
-            title: "President of Technopark Musaba School Community",
-            period: "2020 - 2022",
-        },
-        {
-            title: "Member of Jogja Cyber Security",
-            period: "2023 - Present",
-        },
-    ],
-    education: [
-        {
-            degree: "Bachelor of Information Systems (Ongoing)",
-            institution: "UPN Veteran Yogyakarta",
-            period: "2024 - Present",
-        },
-        {
-            degree: "Vocational High School (Rekayasa Perangkat Lunak)",
-            institution: "SMK Muhammadiyah 1 Bantul",
-            period: "2021 - 2024",
-        },
-    ],
-    contact: {
-        email: "muhhasbiassidiqi18@gmail.com",
-        linkedin: "linkedin.com/in/rnghbt",
-        availability: "Available for freelance work",
-        methods: [
-            {
-                type: "Email",
-                value: "muhhasbiassidiqi18@gmail.com",
-                icon: Mail,
-                url: "mailto:muhhasbiassidiqi18@gmail.com",
-                label: "Send an email",
-            },
-            {
-                type: "LinkedIn",
-                value: "linkedin.com/in/rnghbt",
-                icon: Linkedin,
-                url: "https://linkedin.com/in/rnghbt",
-                label: "Connect on LinkedIn",
-            }
-        ],
-    },
-}
-
-export default function AboutPage() {
-    const data = pageData
+    const filteredSkills = skillFilter === "All" ? allSkills : allSkills.filter(s => s.tier === skillFilter);
 
     return (
-        <main className="mx-auto max-w-7xl sm:px-4 overflow-hidden px-2 min-h-screen">
-            <div
-                className={cn(
-                    "fixed inset-0 -z-1 size-[700px] opacity-60",
-                    "[background-size:20px_20px]",
-                    "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-                    "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
-                )}
-            >
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
-            </div>
-            <h1 className="text-4xl font-bold text-center mt-12 sm:mt-24">About Me</h1>
-            <p className="text-center text-sm text-muted-foreground mt-4 mb-12">
-                Get to know more about my background, skills, and professional journey in web development.
-            </p>
-
-            {/* Profile Section */}
-            <Card className="mb-12 overflow-hidden">
-                <div className="md:flex">
-                    <div className="relative p-8 flex flex-col items-center justify-center md:w-1/3">
-                        <AnimatedGridPattern
-                            numSquares={15}
-                            maxOpacity={0.1}
-                            duration={3}
-                            repeatDelay={1}
-                            strokeDasharray={"4 2"}
-                            className={cn(
-                                "[mask-image:linear-gradient(to_bottom_right,white,transparent)]",
-                                "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
-                            )}
-                        />
-                        <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-background mb-4">
-                            <Image
-                                src={data.profile.imageSrc || "/placeholder.svg"}
-                                alt={`${data.profile.name}'s profile picture`}
-                                fill
-                                className="object-cover"
-                                priority
-                            />
+        <main className="mx-auto max-w-6xl px-4 py-12 min-h-screen space-y-16">
+            {/* HERO STORY CARD */}
+            <div className="relative rounded-2xl border border-border/60 bg-gradient-to-br from-card/80 via-background to-primary/5 p-8 backdrop-blur-xl shadow-xl overflow-hidden">
+                <div className="absolute top-0 right-0 -mr-16 -mt-16 size-72 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+                
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    {/* Character Avatar & RPG Card */}
+                    <div className="lg:col-span-4 flex flex-col items-center text-center p-6 rounded-xl border border-primary/20 bg-background/60 backdrop-blur-sm shadow-md">
+                        <div className="relative size-32 rounded-2xl overflow-hidden border-2 border-primary shadow-lg shadow-primary/20 mb-4">
+                            <Image src="/avatar.jpeg" alt="Hasbi Assidiqi" fill className="object-cover" priority />
                         </div>
-                        <h2 className="text-2xl font-bold text-center">{data.profile.name}</h2>
-                        <p className="text-muted-foreground mb-4 text-center">{data.profile.title}</p>
-                        <div className="flex gap-2 justify-center">
-                            {data.profile.socialLinks.map((link) => {
-                                const Icon = link.icon
+                        <h1 className="text-2xl font-bold text-foreground">Hasbi Assidiqi</h1>
+                        <p className="text-xs font-mono text-primary mt-0.5">LVL 4 • FULLSTACK BUILDER</p>
+                        
+                        {/* Status bar */}
+                        <div className="w-full mt-4 pt-4 border-t border-border/50 space-y-2 text-xs">
+                            <div className="flex justify-between text-muted-foreground">
+                                <span>Availability</span>
+                                <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                                    <span className="size-2 rounded-full bg-emerald-500 animate-pulse" /> Ready for hire
+                                </span>
+                            </div>
+                            <div className="flex justify-between text-muted-foreground">
+                                <span>Location</span>
+                                <span className="text-foreground font-medium">Yogyakarta, ID</span>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 mt-4">
+                            <Button size="sm" variant="outline" onClick={handleCopy} className="text-xs gap-1.5 font-mono">
+                                {copiedEmail ? <Check className="size-3.5 text-emerald-500" /> : <Copy className="size-3.5" />}
+                                {copiedEmail ? "Copied" : "Copy Email"}
+                            </Button>
+                            <Button size="sm" asChild className="text-xs gap-1.5 font-mono">
+                                <Link href="https://docs.google.com/document/d/1UwrlveA4pVUxMA6qjox0oxS13XjNRRVGGS5H_K5DDZ8/edit?usp=sharing" target="_blank">
+                                    Resume <ExternalLink className="size-3" />
+                                </Link>
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Story Statement */}
+                    <div className="lg:col-span-8 space-y-6">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs text-primary font-mono font-medium">
+                            <Sparkles className="size-3.5" /> THE ORIGIN & MISSION
+                        </div>
+                        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-foreground">
+                            Mengubah baris kode menjadi <span className="text-primary underline decoration-primary/40 underline-offset-4">pengalaman web hidup</span> yang cepat dan presisi.
+                        </h2>
+                        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                            Memulai rekayasa perangkat lunak sejak bangku SMK RPL hingga menempuh studi Sistem Informasi di UPN Veteran Yogyakarta. 
+                            Fokus pada arsitektur web modern yang estetis, scalable, dan secure.
+                        </p>
+
+                        {/* Interactive Perks */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                            {perks.map((perk, i) => {
+                                const Icon = perk.icon;
+                                const isActive = selectedPerk === i;
                                 return (
-                                    <Button key={link.platform} variant="outline" size="icon" asChild>
-                                        <Link href={link.url} target="_blank" aria-label={link.platform}>
-                                            <Icon className="h-4 w-4" />
-                                        </Link>
-                                    </Button>
-                                )
+                                    <button
+                                        key={i}
+                                        onClick={() => setSelectedPerk(i)}
+                                        className={cn(
+                                            "text-left p-3.5 rounded-xl border transition-all duration-200 cursor-pointer",
+                                            isActive 
+                                                ? "border-primary bg-primary/10 shadow-sm" 
+                                                : "border-border/60 bg-muted/20 hover:border-border hover:bg-muted/40"
+                                        )}
+                                    >
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <Icon className={cn("size-4", isActive ? "text-primary" : "text-muted-foreground")} />
+                                            <span className="text-[10px] font-mono text-muted-foreground">{perk.badge}</span>
+                                        </div>
+                                        <div className="font-bold text-xs text-foreground">{perk.title}</div>
+                                    </button>
+                                );
                             })}
                         </div>
-                    </div>
-
-                    <div className="p-8 md:w-2/3">
-                        <div className="typeset typeset-docs max-w-[37em] mb-6">
-                            {data.profile.bio.map((paragraph, index) => (
-                                <p key={index}>{paragraph}</p>
-                            ))}
+                        <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-xs text-foreground/90 leading-relaxed font-sans">
+                            💡 <span className="font-semibold">{perks[selectedPerk].title}:</span> {perks[selectedPerk].desc}
                         </div>
-                        <Button asChild>
-                            <Link href={data.profile.resumeUrl} target="_blank">
-                                Download Resume
-                            </Link>
-                        </Button>
                     </div>
                 </div>
-            </Card>
-
-            <div className="space-y-12 mb-12">
-                {/* Skills Section */}
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Skills</h2>
-                    <div className="grid gap-6 md:grid-cols-2">
-                        {data.skillCategories.map((category, index) => (
-                            <Card key={index}>
-                                <CardContent className="pt-6">
-                                    <h3 className="font-semibold mb-4">{category.name}</h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {category.skills.map((skill, skillIndex) => (
-                                            <Badge key={skillIndex} variant="secondary">
-                                                {skill.name}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Experience Section */}
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Experience</h2>
-                    <div className="space-y-6">
-                        {data.experiences.map((experience, index) => (
-                            <div key={index} className="border-l-2 border-primary/50 pl-4 pb-2">
-                                <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
-                                    <h3 className="font-semibold">{experience.title}</h3>
-                                    <span className="text-sm text-muted-foreground">{experience.period}</span>
-                                </div>
-                                <div className="text-muted-foreground mb-2">{experience.company}</div>
-                                <p>{experience.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Achievements Section */}
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Achievements</h2>
-                    <div className="space-y-6">
-                        {data.achievements.map((achievement, index) => (
-                            <div key={index} className="border-l-2 border-yellow-500/50 pl-4 pb-2">
-                                <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
-                                    <h3 className="font-semibold">{achievement.title}</h3>
-                                    <span className="text-sm text-muted-foreground">{achievement.period}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-
-                {/* Education Section */}
-                <section>
-                    <h2 className="text-2xl font-bold mb-4">Education</h2>
-                    <div className="space-y-6">
-                        {data.education.map((edu, index) => (
-                            <div key={index} className="border-l-2 border-primary/50 pl-4 pb-2">
-                                <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
-                                    <h3 className="font-semibold">{edu.degree}</h3>
-                                    <span className="text-sm text-muted-foreground">{edu.period}</span>
-                                </div>
-                                <div className="text-muted-foreground">{edu.institution}</div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Contact Section */}
-                <section id="contact">
-                    <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
-                    <div className="md:grid space-y-6 md:gap-6 md:grid-cols-2 ">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Get In Touch</CardTitle>
-                                <CardDescription>
-                                    I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your
-                                    vision.
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    {data.contact.methods.map((method, index) => {
-                                        const Icon = method.icon
-                                        return (
-                                            <div key={index} className="flex items-center gap-3">
-                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                                                    <Icon className="h-5 w-5" />
-                                                </div>
-                                                <div className="space-y-0.5">
-                                                    <p className="text-sm font-medium">{method.type}</p>
-                                                    {method.url ? (
-                                                        <Link
-                                                            href={method.url}
-                                                            className="text-sm text-muted-foreground hover:underline flex sm:flex-row flex-col sm:justify-start justify-center sm:items-center gap-1"
-                                                            target={method.url.startsWith("http") ? "_blank" : undefined}
-                                                        >
-                                                            {method.value}
-                                                            {method.label && (
-                                                                <span className="text-xs text-primary flex items-center">
-                                                                    {method.label} <ExternalLink className="h-3 w-3 ml-1" />
-                                                                </span>
-                                                            )}
-                                                        </Link>
-                                                    ) : (
-                                                        <p className="text-sm text-muted-foreground">{method.value}</p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </CardContent>
-                            <CardFooter>
-                                <div className="w-full">
-                                    <p className="text-sm text-muted-foreground mb-2 flex items-center gap-1">
-                                        <Calendar className="h-4 w-4 inline mr-1" />
-                                        <span>{data.contact.availability}</span>
-                                    </p>
-                                    <div className="flex gap-2 flex-wrap">
-                                        {data.profile.socialLinks.map((link) => {
-                                            const Icon = link.icon
-                                            return (
-                                                <Button key={link.platform} variant="outline" size="sm" asChild>
-                                                    <Link href={link.url} target="_blank">
-                                                        <Icon className="h-4 w-4 mr-2" /> {link.platform}
-                                                    </Link>
-                                                </Button>
-                                            )
-                                        })}
-                                    </div>
-                                </div>
-                            </CardFooter>
-                        </Card>
-
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Send Me a Message</CardTitle>
-                                <CardDescription>Fill out the form below and I&apos;ll get back to you as soon as possible.</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <ContactForm />
-                            </CardContent>
-                        </Card>
-                    </div>
-                </section>
             </div>
-        </main>
-    )
-}
 
+            {/* TECH MASTERY PLAYGROUND */}
+            <section className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div className="text-xs font-mono text-primary uppercase font-bold flex items-center gap-1.5">
+                            <Code2 className="size-4" /> Arsenal & Tech Stack
+                        </div>
+                        <h3 className="text-2xl font-bold tracking-tight text-foreground">Keahlian & Penguasaan Tools</h3>
+                    </div>
+                    {/* Filter Pills */}
+                    <div className="flex flex-wrap gap-1.5">
+                        {["All", "Core", "Backend", "DevOps", "Design"].map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => setSkillFilter(cat)}
+                                className={cn(
+                                    "px-3 py-1 rounded-full text-xs font-mono font-medium transition-all",
+                                    skillFilter === cat 
+                                        ? "bg-primary text-primary-foreground font-semibold shadow-sm" 
+                                        : "bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground"
+                                )}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {filteredSkills.map((sk) => (
+                        <div key={sk.name} className="p-4 rounded-xl border border-border/60 bg-card/60 backdrop-blur-sm space-y-2 hover:border-primary/40 transition-colors">
+                            <div className="flex items-center justify-between text-xs font-semibold">
+                                <span className="text-foreground">{sk.name}</span>
+                                <span className="text-primary font-mono">{sk.level}%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                                <div 
+                                    className="h-full bg-gradient-to-r from-amber-500 to-primary rounded-full transition-all duration-500" 
+                                    style={{ width: `${sk.level}%` }}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* TROPHY HALL */}
+            <section className="space-y-6">
+                <div>
+                    <div className="text-xs font-mono text-primary uppercase font-bold flex items-center gap-1.5">
+                        <Trophy className="size-4" /> Hall of Achievements
+                    </div>
+                    <h3 className="text-2xl font-bold tracking-tight text-foreground">Kompetisi & Penghargaan</h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                        {
+                            title: "Gold Medalist National Olympiad",
+                            event: "Olympicad Informatika Nasional",
+                            year: "2021",
+                            rank: "🥇 EMAS",
+                            gradient: "from-amber-500/20 via-primary/5 to-transparent border-amber-500/40"
+                        },
+                        {
+                            title: "2nd Place Cyber Security",
+                            event: "LKS SMK Tingkat Provinsi DIY",
+                            year: "2021",
+                            rank: "🥈 PERAK",
+                            gradient: "from-slate-400/20 via-muted/5 to-transparent border-slate-400/40"
+                        },
+                        {
+                            title: "1st Place Provincial Olympiad",
+                            event: "Olympicad Informatika DIY",
+                            year: "2021",
+                            rank: "🥇 JUARA 1",
+                            gradient: "from-amber-500/20 via-primary/5 to-transparent border-amber-500/40"
+                        },
+                        {
+                            title: "Web Technology Mentor",
+                            event: "LKS Web Tech (Bimbing 3rd Place)",
+                            year: "2022",
+                            rank: "🥉 MENTOR",
+                            gradient: "from-orange-500/20 via-muted/5 to-transparent border-orange-500/40"
+                        },
+                        {
+                            title: "President of Technopark Musaba",
+                            event: "Komunitas Teknologi Sekolah",
+                            year: "2020 - 2022",
+                            rank: "👑 LEADERSHIP",
+                            gradient: "from-primary/20 via-background to-transparent border-primary/40"
+                        },
+                        {
+                            title: "Jogja Cyber Security Member",
+                            event: "Komunitas Pegiat Keamanan Siber",
+                            year: "2023 - Present",
+                            rank: "🛡️ CYBERSEC",
+                            gradient: "from-blue-500/20 via-background to-transparent border-blue-500/40"
+                        }
+                    ].map((t, idx) => (
+                        <div key={idx} className={cn("p-5 rounded-2xl border bg-gradient-to-b relative overflow-hidden shadow-sm", t.gradient)}>
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-background/80 border border-border">
+                                    {t.rank}
+                                </span>
+                                <span className="text-xs font-mono text-muted-foreground">{t.year}</span>
+                            </div>
+                            <h4 className="font-bold text-foreground text-sm sm:text-base mb-1">{t.title}</h4>
+                            <p className="text-xs text-muted-foreground">{t.event}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* CAREER MILESTONES */}
+            <section className="space-y-6">
+                <div>
+                    <div className="text-xs font-mono text-primary uppercase font-bold flex items-center gap-1.5">
+                        <Briefcase className="size-4" /> Trajectory
+                    </div>
+                    <h3 className="text-2xl font-bold tracking-tight text-foreground">Pengalaman & Riwayat Pendidikan</h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                        {
+                            role: "Freelance Full Stack Developer",
+                            org: "Self-employed",
+                            period: "2021 — Present",
+                            desc: "Membangun custom web apps, API RESTful, dan integrasi frontend interaktif untuk berbagai klien independen.",
+                            icon: Briefcase
+                        },
+                        {
+                            role: "Bachelor of Information Systems",
+                            org: "UPN Veteran Yogyakarta",
+                            period: "2024 — Present",
+                            desc: "Mendalami arsitektur sistem informasi enterprise, manajemen basis data relasional, dan rekayasa perangkat lunak lanjutan.",
+                            icon: GraduationCap
+                        },
+                        {
+                            role: "Web Developer Intern",
+                            org: "PT Global Intermedia",
+                            period: "2022",
+                            desc: "Berpartisipasi dalam maintenance dan deployment aplikasi web produksi berskala industri.",
+                            icon: Briefcase
+                        },
+                        {
+                            role: "Cybersecurity Intern",
+                            org: "PT Gmedia",
+                            period: "2022",
+                            desc: "Monitoring sistem keamanan jaringan, vulnerability assessment, dan implementasi network hardening.",
+                            icon: ShieldCheck
+                        }
+                    ].map((exp, i) => {
+                        const Icon = exp.icon;
+                        return (
+                            <div key={i} className="p-5 rounded-xl border border-border/70 bg-card/40 backdrop-blur-sm space-y-2 hover:border-primary/40 transition-colors">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                                            <Icon className="size-4" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-sm text-foreground">{exp.role}</h4>
+                                            <div className="text-xs text-muted-foreground">{exp.org}</div>
+                                        </div>
+                                    </div>
+                                    <Badge variant="outline" className="font-mono text-[10px]">{exp.period}</Badge>
+                                </div>
+                                <p className="text-xs text-muted-foreground leading-relaxed pt-1">{exp.desc}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
+
+            {/* CONTACT DISPATCH */}
+            <section id="contact" className="rounded-2xl border border-primary/30 bg-gradient-to-br from-card/90 via-background to-primary/10 p-8 shadow-xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div className="space-y-4">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-xs text-primary font-mono font-bold">
+                            <Mail className="size-3.5" /> LET'S TALK
+                        </div>
+                        <h3 className="text-3xl font-bold tracking-tight text-foreground">Siap Membangun Sesuatu yang Keren?</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                            Terbuka untuk project freelance, kolaborasi open source, atau sekadar diskusi teknis seputar frontend & web performance.
+                        </p>
+                        
+                        <div className="space-y-2 pt-2">
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                                <Mail className="size-4 text-primary" />
+                                <a href="mailto:muhhasbiassidiqi18@gmail.com" className="hover:underline text-foreground font-medium">
+                                    muhhasbiassidiqi18@gmail.com
+                                </a>
+                            </div>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                                <Linkedin className="size-4 text-blue-400" />
+                                <a href="https://linkedin.com/in/rnghbt" target="_blank" className="hover:underline text-foreground font-medium">
+                                    linkedin.com/in/rnghbt
+                                </a>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 pt-2">
+                            <Button variant="outline" size="icon" asChild>
+                                <a href="https://github.com/hasbisdqi" target="_blank" aria-label="GitHub"><Github className="size-4" /></a>
+                            </Button>
+                            <Button variant="outline" size="icon" asChild>
+                                <a href="https://linkedin.com/in/rnghbt" target="_blank" aria-label="LinkedIn"><Linkedin className="size-4 text-blue-400" /></a>
+                            </Button>
+                            <Button variant="outline" size="icon" asChild>
+                                <a href="https://twitter.com/rnghbt" target="_blank" aria-label="Twitter"><Twitter className="size-4 text-sky-400" /></a>
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className="p-6 rounded-xl bg-background/80 border border-border/70 shadow-sm">
+                        <h4 className="font-bold text-sm mb-4 text-foreground">Kirim Pesan Langsung</h4>
+                        <ContactForm />
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+}
