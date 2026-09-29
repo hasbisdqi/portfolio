@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { getProjects, getProjectBySlug } from "@/lib/contents"
-import CloudinaryImage from "@/components/cloudinary-image"
+import Image from "next/image"
 import { getOgImageUrl } from "@/lib/utils"
 
 interface ProjectPageProps {
@@ -83,7 +83,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             {/* Main Project Image */}
             {project.meta.coverImage && (
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-8 border border-border">
-                    <CloudinaryImage
+                    <Image
                         src={project.meta.coverImage}
                         alt={project.meta.title}
                         width={1200}

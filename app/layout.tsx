@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle";
+import { CommandPalette } from "@/components/command-palette";
 import { getOgImageUrl } from "@/lib/utils";
 
 const geist = Geist({
@@ -63,6 +64,7 @@ export default function RootLayout({
           <Navbar>
             {children}
           </Navbar>
+          <CommandPalette />
         </ThemeProvider>
       </body>
     </html>

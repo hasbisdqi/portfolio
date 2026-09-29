@@ -1,4 +1,4 @@
-import CloudinaryImage from "@/components/cloudinary-image";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { getPosts, getPostBySlug } from "@/lib/contents";
 import { formatDate, getOgImageUrl } from "@/lib/utils";
@@ -83,7 +83,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
                 {post.meta.cover && (
                     <div className="mb-8 overflow-hidden rounded-xl border border-border/40 shadow-sm">
-                        <CloudinaryImage
+                        <Image
                             src={post.meta.cover}
                             alt={post.meta.title}
                             width={1200}

@@ -3,7 +3,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { getReadingTime } from './utils';
-import CloudinaryImage from '@/components/cloudinary-image';
+import Image from 'next/image';
 import React from 'react';
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
@@ -91,7 +91,7 @@ export async function getPostBySlug(slug: string): Promise<PostContent | null> {
     }>({
         source: rawMDX,
         components: {
-            img: (props) => <CloudinaryImage className="max-w-full h-auto rounded-lg" src={props.src ?? ''} {...props} width={800} height={600} />
+            img: (props) => <img className="max-w-full h-auto rounded-lg" src={props.src ?? ''} alt={props.alt ?? ''} {...props} />
         },
         options: {
             parseFrontmatter: false,
@@ -194,7 +194,7 @@ export async function getProjectBySlug(slug: string): Promise<ProjectContent | n
     }>({
         source: rawMDX,
         components: {
-            img: (props) => <CloudinaryImage className="max-w-full h-auto rounded-lg" src={props.src ?? ''} {...props} width={800} height={600} />
+            img: (props) => <img className="max-w-full h-auto rounded-lg" src={props.src ?? ''} alt={props.alt ?? ''} {...props} />
         },
         options: {
             parseFrontmatter: false,
