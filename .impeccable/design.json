@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-13T15:32:00Z",
+  "title": "Design System: rnghbt Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "primary": { 
+        "role": "primary", 
+        "displayName": "Doofus Yellow", 
+        "canonical": "hsl(47.9, 95.8%, 53.1%)", 
+        "tonalRamp": ["hsl(47.9, 95.8%, 15%)", "hsl(47.9, 95.8%, 25%)", "hsl(47.9, 95.8%, 35%)", "hsl(47.9, 95.8%, 45%)", "hsl(47.9, 95.8%, 53.1%)", "hsl(47.9, 95.8%, 65%)", "hsl(47.9, 95.8%, 80%)", "hsl(47.9, 95.8%, 95%)"] 
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button, used sparingly for the most important action on a page.",
+      "html": "<button class=\"ds-btn-primary\">Read Article</button>",
+      "css": ".ds-btn-primary { background: hsl(47.9, 95.8%, 53.1%); color: hsl(26, 83.3%, 14.1%); padding: 8px 16px; font-weight: 500; font-family: var(--font-geist-sans), sans-serif; border: none; border-radius: 6px; transition: opacity 0.2s, transform 0.1s; cursor: pointer; } .ds-btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary action button for alternative actions.",
+      "html": "<button class=\"ds-btn-secondary\">Cancel</button>",
+      "css": ".ds-btn-secondary { background: hsl(60, 4.8%, 95.9%); color: hsl(20, 14.3%, 4.1%); padding: 8px 16px; font-weight: 500; font-family: var(--font-geist-sans), sans-serif; border: 1px solid hsl(20, 5.9%, 90%); border-radius: 6px; transition: background 0.2s; cursor: pointer; } .ds-btn-secondary:hover { background: hsl(20, 5.9%, 90%); }"
+    },
+    {
+      "name": "Standard Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Structured container for content blocks.",
+      "html": "<div class=\"ds-card\"><h3>Deep Dive</h3><p>A rigorous look into the architecture...</p></div>",
+      "css": ".ds-card { background: hsl(0, 0%, 100%); border: 1px solid hsl(20, 5.9%, 90%); border-radius: 8px; padding: 24px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); font-family: var(--font-geist-sans), sans-serif; color: hsl(20, 14.3%, 4.1%); } .ds-card h3 { margin-top: 0; font-weight: 700; font-size: 1.25rem; } .ds-card p { margin-bottom: 0; line-height: 1.6; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Rigorous Playground",
+    "overview": "This portfolio marries serious, uncompromising technical execution with the relaxed, slightly goofy energy of the \"rnghbt / Doofus Rick\" persona. The aesthetic philosophy is warm and approachable: softened edges and a comfortable reading rhythm invite the user in, while the structured, highly-readable layout proves the technical depth. It is a space where rigorous engineering deep-dives feel friendly rather than intimidating.",
+    "keyCharacteristics": [
+      "Unpretentious but technically flawless.",
+      "Warm, high-contrast accents (Doofus Yellow) against clean, analytical backgrounds.",
+      "Frictionless, long-form reading experience.",
+      "Tactile, confident interactive components."
+    ],
+    "rules": [
+      {
+        "name": "The Spotlight Rule",
+        "body": "Doofus Yellow is used for emphasis, not decoration. It should draw the eye to exactly one primary action or key takeaway per viewport.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tactile Boundary Rule",
+        "body": "Interactive containers (cards, buttons) must have a clear, visible boundary (a border or a shadow) at rest. They never blend vaguely into the background.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Doofus Yellow sparingly to guide the user's eye to the most important action.",
+      "Do maintain a strict maximum line length (~70ch) for all technical writeups.",
+      "Do ensure every interactive element has a clear, tactile hover state."
+    ],
+    "donts": [
+      "Don't use large washes of bright color that distract from the reading experience.",
+      "Don't rely solely on color to indicate hierarchy; use borders and tight shadows to create architectural structure.",
+      "Don't use overly decorative typefaces; keep the typography strictly functional and engineered (Geist)."
+    ]
+  }
+}

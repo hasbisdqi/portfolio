@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import React from "react";
+import { motion } from "motion/react";
+import React, { useEffect, useState } from "react";
 
 export const Meteors = ({
     number,
@@ -10,6 +10,12 @@ export const Meteors = ({
     number?: number;
     className?: string;
 }) => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const meteors = new Array(number || 20).fill(true);
     return (
         <motion.div
@@ -17,7 +23,7 @@ export const Meteors = ({
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
-            {meteors.map((el, idx) => {
+            {mounted && meteors.map((el, idx) => {
                 const meteorCount = number || 20;
                 // Calculate position to evenly distribute meteors across container width
                 const position = (idx / meteorCount) * 100 // Spread across 800px range, centered

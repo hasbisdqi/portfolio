@@ -93,7 +93,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     </div>
                 )}
 
-                <div className="typeset typeset-docs max-w-[37em]">
+                <div className="typeset typeset-docs">
                     {post.content}
                 </div>
             </div>

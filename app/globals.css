@@ -1,14 +1,13 @@
 @import 'tailwindcss';
 @import "./typeset.css";
-@plugin "@tailwindcss/typography";
 
 .typeset-docs {
-  --typeset-font-body: var(--font-geist);
-  --typeset-font-heading: var(--font-geist);
-  --typeset-font-mono: var(--font-geist-mono);
-  --typeset-size: 15px;
-  --typeset-leading: 1.75;
-  --typeset-flow: 1.25em;
+    --typeset-font-body: var(--font-geist);
+    --typeset-font-heading: var(--font-geist);
+    --typeset-font-mono: var(--font-geist-mono);
+    --typeset-size: 15px;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.25em;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -95,8 +94,11 @@
     body {
         font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    
-    code, kbd, samp, pre {
+
+    code,
+    kbd,
+    samp,
+    pre {
         font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
 }
@@ -171,62 +173,23 @@
 }
 
 [data-rehype-pretty-code-figure] pre {
-    @apply px-0;
+    @apply p-4 rounded-lg overflow-x-auto border border-border/50 text-sm;
 }
+
+.dark [data-rehype-pretty-code-figure] pre {}
 
 [data-rehype-pretty-code-figure] code {
-    @apply text-sm !leading-loose md:text-base border-0 p-0;
-}
-
-[data-rehype-pretty-code-figure] code[data-line-numbers] {
-    counter-reset: line;
-}
-
-[data-rehype-pretty-code-figure] code[data-line-numbers]>[data-line]::before {
-    counter-increment: line;
-    content: counter(line);
-    @apply mr-4 inline-block w-4 text-right text-gray-500;
-}
-
-[data-rehype-pretty-code-figure] [data-line] {
-    @apply border-l-2 border-l-transparent px-3;
-}
-
-[data-rehype-pretty-code-figure] [data-highlighted-line] {
-    @apply border-l-primary bg-muted/50;
-}
-
-[data-rehype-pretty-code-figure] [data-highlighted-line] > span {
-    background-color: transparent !important;
-}
-
-[data-rehype-pretty-code-figure] [data-highlighted-chars] {
-    @apply rounded bg-muted px-1 py-0.5;
-}
-
-[data-rehype-pretty-code-figure] [data-highlighted-chars] > * {
-    background-color: transparent !important;
-}
-
-[data-rehype-pretty-code-figure] [data-chars-id] {
-    @apply border-b-2 p-1 shadow-none;
+    @apply text-sm leading-relaxed border-0 p-0 font-mono;
 }
 
 .subheading-anchor {
     @apply no-underline hover:underline;
 }
 
-code[data-theme],
 code[data-theme] span {
     color: var(--shiki-light);
-    background-color: var(--shiki-light-bg);
 }
 
-@media (prefers-color-scheme: dark) {
-
-    code[data-theme],
-    code[data-theme] span {
-        color: var(--shiki-dark);
-        background-color: var(--shiki-dark-bg);
-    }
+.dark code[data-theme] span {
+    color: var(--shiki-dark);
 }
