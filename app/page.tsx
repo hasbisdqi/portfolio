@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { CodeCascade } from "@/components/ui/code-cascade";
+import { InteractiveConstellation } from "@/components/ui/interactive-constellation";
 import { IDETooltip } from "@/components/ui/ide-tooltip";
 import { getPosts } from "@/lib/contents";
 import { cn } from "@/lib/utils";
@@ -33,7 +33,7 @@ export default async function Home() {
 
                 {/* Right Column: Posts Grid */}
                 <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {posts.slice(0, 4).map((post, index) => {
+                    {posts.slice(0, 5).map((post, index) => {
                         const isFeatured = index === 0;
                         return (
                             <div 
@@ -70,7 +70,7 @@ export default async function Home() {
                     })}
                 </div>
             </div>
-            <CodeCascade />
+            <InteractiveConstellation />
         </main>
     );
 }
