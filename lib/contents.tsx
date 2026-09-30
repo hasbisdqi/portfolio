@@ -1,4 +1,5 @@
 import { compileMDX } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
@@ -7,6 +8,35 @@ import Image from 'next/image';
 import React from 'react';
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
+
+const sharedMdxComponents = {
+    img: (props: any) => <img className="max-w-full h-auto rounded-lg my-4" src={props.src ?? ''} alt={props.alt ?? ''} {...props} />,
+    table: (props: any) => (
+        <div className="my-6 w-full overflow-x-auto rounded-xl border border-border/60 shadow-sm">
+            <table className="w-full text-xs sm:text-sm font-mono mt-0" {...props} />
+        </div>
+    ),
+    thead: (props: any) => <thead className="bg-muted/50 border-b border-border/60 text-foreground" {...props} />,
+    th: (props: any) => <th className="px-4 py-2.5 text-left font-bold text-foreground" {...props} />,
+    td: (props: any) => <td className="px-4 py-2.5 border-b border-border/30 text-muted-foreground" {...props} />,
+    tr: (props: any) => <tr className="hover:bg-muted/20 transition-colors" {...props} />,
+};
+
+const sharedMdxOptions = {
+    parseFrontmatter: false,
+    mdxOptions: {
+        remarkPlugins: [remarkGfm as any],
+        rehypePlugins: [
+            [rehypePrettyCode, {
+                theme: { dark: "vitesse-black", light: "vitesse-light" },
+            }] as any,
+            rehypeSlug as any,
+            [rehypeAutolinkHeadings, {
+                behavior: 'wrap' as const
+            }] as any,
+        ],
+    },
+};
 
 const notion = new Client({ auth: process.env.NOTION_API });
 const n2m = new NotionToMarkdown({ notionClient: notion });
@@ -90,23 +120,8 @@ export async function getPostBySlug(slug: string): Promise<PostContent | null> {
         coverImage: string,
     }>({
         source: rawMDX,
-        components: {
-            img: (props) => <img className="max-w-full h-auto rounded-lg" src={props.src ?? ''} alt={props.alt ?? ''} {...props} />
-        },
-        options: {
-            parseFrontmatter: false,
-            mdxOptions: {
-                rehypePlugins: [
-                    [rehypePrettyCode, {
-                        theme: { dark: "vitesse-black", light: "vitesse-light" },
-                    }],
-                    rehypeSlug,
-                    [rehypeAutolinkHeadings, {
-                        behavior: 'wrap'
-                    }],
-                ],
-            },
-        }
+        components: sharedMdxComponents,
+        options: sharedMdxOptions
     });
 
     return {
@@ -193,23 +208,8 @@ export async function getProjectBySlug(slug: string): Promise<ProjectContent | n
         images: string[],
     }>({
         source: rawMDX,
-        components: {
-            img: (props) => <img className="max-w-full h-auto rounded-lg" src={props.src ?? ''} alt={props.alt ?? ''} {...props} />
-        },
-        options: {
-            parseFrontmatter: false,
-            mdxOptions: {
-                rehypePlugins: [
-                    [rehypePrettyCode, {
-                        theme: { dark: "vitesse-black", light: "vitesse-light" },
-                    }],
-                    rehypeSlug,
-                    [rehypeAutolinkHeadings, {
-                        behavior: 'wrap'
-                    }],
-                ],
-            },
-        },
+        components: sharedMdxComponents,
+        options: sharedMdxOptions
     });
 
     return {
