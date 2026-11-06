@@ -58,7 +58,23 @@ export function CommandPalette() {
             group: "Navigation",
             icon: Home,
             shortcut: "G H",
-            action: () => { router.push("/"); setOpen(false); }
+            action: () => { router.push("/#hero"); setOpen(false); }
+        },
+        {
+            id: "nav-projects",
+            label: "Go to Projects (~/repositories)",
+            group: "Navigation",
+            icon: FolderGit2,
+            shortcut: "G R",
+            action: () => { router.push("/#projects"); setOpen(false); }
+        },
+        {
+            id: "nav-posts",
+            label: "Go to Posts & Notes (~/knowledge-base)",
+            group: "Navigation",
+            icon: FileText,
+            shortcut: "G P",
+            action: () => { router.push("/#posts"); setOpen(false); }
         },
         {
             id: "nav-about",
@@ -66,23 +82,7 @@ export function CommandPalette() {
             group: "Navigation",
             icon: User,
             shortcut: "G A",
-            action: () => { router.push("/about"); setOpen(false); }
-        },
-        {
-            id: "nav-posts",
-            label: "Go to Posts & Notes (~/post)",
-            group: "Navigation",
-            icon: FileText,
-            shortcut: "G P",
-            action: () => { router.push("/post"); setOpen(false); }
-        },
-        {
-            id: "nav-projects",
-            label: "Go to Projects (~/project)",
-            group: "Navigation",
-            icon: FolderGit2,
-            shortcut: "G R",
-            action: () => { router.push("/project"); setOpen(false); }
+            action: () => { router.push("/#about"); setOpen(false); }
         },
 
         // Theme Switcher
