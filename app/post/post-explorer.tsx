@@ -87,8 +87,14 @@ export default function PostExplorer({ initialPosts }: { initialPosts: PostItem[
 
     const activePost = filteredPosts[selectedIndex] || filteredPosts[0];
 
+    const isInitialMount = useRef(true);
+
     // Auto scroll & snap active item ke viewport container
     useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            return;
+        }
         const currentItem = itemRefs.current[selectedIndex];
         if (currentItem && scrollContainerRef.current) {
             currentItem.scrollIntoView({

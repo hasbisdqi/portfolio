@@ -98,8 +98,14 @@ export default function ProjectExplorer({ initialProjects }: { initialProjects: 
 
     const activeProject = filteredProjects[selectedIndex] || filteredProjects[0];
 
+    const isInitialMount = useRef(true);
+
     // Scroll & Snap active item ke viewport container
     useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            return;
+        }
         const currentItem = itemRefs.current[selectedIndex];
         if (currentItem && scrollContainerRef.current) {
             currentItem.scrollIntoView({

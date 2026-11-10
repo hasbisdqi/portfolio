@@ -123,7 +123,13 @@ export default function TerminalAbout() {
         setInputVal("");
     };
 
+    const isFirstRender = useRef(true);
+
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
         consoleEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [commandLogs]);
 
