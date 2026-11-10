@@ -1,14 +1,16 @@
-import { buttonVariants } from "@/components/ui/button";
-import { InteractiveConstellation } from "@/components/ui/interactive-constellation";
-import { IDETooltip } from "@/components/ui/ide-tooltip";
-import { getPosts, getProjects } from "@/lib/contents";
-import { cn } from "@/lib/utils";
+import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import ProjectExplorer from "./project/project-explorer";
-import PostExplorer from "./post/post-explorer";
-import TerminalAbout from "@/components/terminal-about";
+import { getPosts, getProjects } from "@/lib/contents";
 import ContactForm from "./about/contact-form";
-import { ArrowDown, FolderGit2, Newspaper, Terminal, Mail, User, Github, Linkedin, Twitter } from "lucide-react";
+import { 
+    Github, 
+    Linkedin, 
+    Mail, 
+    ExternalLink, 
+    ArrowUpRight, 
+    FileText
+} from "lucide-react";
 
 export default async function Home() {
     const [posts, projects] = await Promise.all([
@@ -18,253 +20,355 @@ export default async function Home() {
 
     const sortedPosts = [...posts].sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
 
+    const techStack = [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Flutter",
+        "Dart",
+        "Node.js",
+        "Python",
+        "PostgreSQL",
+        "Prisma",
+        "Docker",
+        "Solana Web3",
+        "Git",
+    ];
+
+    const experiences = [
+        {
+            period: "2024 — Present",
+            role: "Information Systems",
+            organization: "UPN \"Veteran\" Yogyakarta",
+            desc: "Undergraduate student focusing on enterprise software engineering, distributed database systems, and human-computer interaction.",
+        },
+        {
+            period: "2021 — Present",
+            role: "Freelance Full Stack Engineer",
+            organization: "Independent",
+            desc: "Architecting responsive, high-performance web applications, REST API gateways, and custom workflow automations.",
+        },
+        {
+            period: "2022",
+            role: "Web Developer Intern",
+            organization: "PT Global Intermedia Nusantara",
+            desc: "Collaborated on production government & enterprise web modules, query optimization, and UI standards.",
+        },
+    ];
+
     return (
-        <main className="min-h-screen relative overflow-hidden">
-            {/* 1. HERO SECTION */}
-            <section id="hero" className="flex justify-center items-center min-h-[90vh] py-20 px-4 relative">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl w-full relative z-10 items-center">
-                    {/* Left Column: Hero Intro */}
-                    <div className="lg:col-span-6 relative">
-                        {/* Ambient Glow */}
-                        <div className="absolute -inset-16 bg-primary/10 blur-[100px] rounded-full -z-10 pointer-events-none" />
-
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-mono mb-4">
-                            <span className="size-2 rounded-full bg-emerald-500 animate-ping" />
-                            <span>AVAILABLE FOR WORK • FULL-STACK & MOBILE</span>
+        <main className="min-h-screen pb-24">
+            <div className="max-w-2xl mx-auto px-5 pt-16 md:pt-24 space-y-16">
+                
+                {/* 1. HERO & PROFILE HEADER */}
+                <section id="hero" className="space-y-6">
+                    <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1">
+                            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                                Hasbi Assidiqi
+                            </h1>
+                            <p className="font-mono text-xs sm:text-sm text-muted-foreground tracking-widest uppercase">
+                                F u l l &nbsp; S t a c k &nbsp; E n g i n e e r .
+                            </p>
+                            <p className="text-xs text-muted-foreground flex items-center gap-1.5 pt-1 font-mono">
+                                <span>Yogyakarta, ID</span>
+                                <span>·</span>
+                                <span className="inline-flex items-center gap-1.5 text-emerald-500 font-medium">
+                                    <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                    Available for hire
+                                </span>
+                            </p>
                         </div>
-                        
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 leading-tight tracking-tight">
-                            Hi, I'm <br />
-                            <span className="text-primary tracking-tight">Hasbi Assidiqi</span>
-                        </h1>
-                        <p className="text-muted-foreground text-pretty text-sm sm:text-base leading-relaxed max-w-lg mb-8">
-                            I am a <IDETooltip keyword="Developer" typeDef="Entity & { passion: number }" description="A carbon-based lifeform converting caffeine into dynamic web applications at 60fps.">passionate web & mobile developer</IDETooltip> crafting high-performance applications with clean architecture and modern DX. Building full-stack systems with <IDETooltip keyword="Next.js" typeDef="Framework<React>" description="The React framework for the web.">Next.js</IDETooltip>, <IDETooltip keyword="Flutter" typeDef="SDK<Dart>" description="Multi-platform mobile app development.">Flutter</IDETooltip>, and scalable backend services.
-                        </p>
 
-                        <div className="flex flex-wrap gap-4 items-center">
-                            <a 
-                                href="#projects" 
-                                className={cn(buttonVariants(), "shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-shadow gap-2")}
-                            >
-                                <FolderGit2 className="size-4" />
-                                <span>Explore Projects</span>
-                            </a>
-                            <a 
-                                href="#about" 
-                                className={cn(buttonVariants({ variant: "secondary" }), "bg-background/50 backdrop-blur-sm hover:bg-background/80 gap-2")}
-                            >
-                                <User className="size-4" />
-                                <span>About Me</span>
-                            </a>
-                            <a 
-                                href="#contact" 
-                                className={cn(buttonVariants({ variant: "outline" }), "gap-2 font-mono text-xs")}
-                            >
-                                <Mail className="size-4" />
-                                <span>Contact</span>
-                            </a>
+                        <div className="relative size-16 sm:size-20 rounded-2xl overflow-hidden border border-border/80 shadow-sm shrink-0 bg-muted">
+                            <Image
+                                src="/avatar.jpeg"
+                                alt="Hasbi Assidiqi"
+                                fill
+                                priority
+                                className="object-cover"
+                            />
                         </div>
                     </div>
 
-                    {/* Right Column: Featured Teasers (Latest Deep Dive & Project Spotlight) */}
-                    <div className="lg:col-span-6 space-y-4">
-                        <div className="text-xs font-mono text-muted-foreground flex items-center justify-between pb-1 border-b border-border/40">
-                            <span>// FEATURED_TELEMETRY</span>
-                            <span className="text-primary">LATEST_ACTIVITY</span>
-                        </div>
+                    {/* Clean Bullet Bio (samworks style) */}
+                    <div className="space-y-2.5 text-sm sm:text-base text-muted-foreground leading-relaxed pt-1">
+                        <p className="flex items-start gap-2.5">
+                            <span className="text-foreground font-bold shrink-0">•</span>
+                            <span>
+                                I&apos;m a software engineer passionate about crafting digital products where thoughtful design meets clean, scalable code.
+                            </span>
+                        </p>
+                        <p className="flex items-start gap-2.5">
+                            <span className="text-foreground font-bold shrink-0">•</span>
+                            <span>
+                                I design and develop modern interfaces with <strong className="text-foreground font-semibold">React, Next.js, TypeScript, and Flutter</strong> focusing on usability, performance, and delightful interactions.
+                            </span>
+                        </p>
+                        <p className="flex items-start gap-2.5">
+                            <span className="text-foreground font-bold shrink-0">•</span>
+                            <span>
+                                Currently studying Information Systems at UPN &ldquo;Veteran&rdquo; Yogyakarta, enjoying transforming ideas into polished products and exploring on-chain web3 mechanics.
+                            </span>
+                        </p>
+                    </div>
 
-                        {posts.slice(0, 2).map((post, index) => (
+                    {/* Minimalist Contact & Social Pills */}
+                    <div className="flex flex-wrap items-center gap-2 pt-1 font-mono text-xs">
+                        <a
+                            href="https://github.com/hasbisdqi"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 bg-muted/20 hover:bg-muted/60 hover:text-foreground text-muted-foreground transition-colors"
+                        >
+                            <Github className="size-3.5" />
+                            <span>GitHub</span>
+                            <ArrowUpRight className="size-3 opacity-50" />
+                        </a>
+                        <a
+                            href="https://linkedin.com/in/rnghbt"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 bg-muted/20 hover:bg-muted/60 hover:text-foreground text-muted-foreground transition-colors"
+                        >
+                            <Linkedin className="size-3.5 text-blue-500" />
+                            <span>LinkedIn</span>
+                            <ArrowUpRight className="size-3 opacity-50" />
+                        </a>
+                        <a
+                            href="mailto:muhhasbiassidiqi18@gmail.com"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 bg-muted/20 hover:bg-muted/60 hover:text-foreground text-muted-foreground transition-colors"
+                        >
+                            <Mail className="size-3.5" />
+                            <span>Email</span>
+                        </a>
+                        <a
+                            href="https://docs.google.com/document/d/1UwrlveA4pVUxMA6qjox0oxS13XjNRRVGGS5H_K5DDZ8/edit?usp=sharing"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 bg-muted/20 hover:bg-muted/60 hover:text-foreground text-muted-foreground transition-colors"
+                        >
+                            <FileText className="size-3.5" />
+                            <span>Resume</span>
+                            <ExternalLink className="size-3 opacity-50" />
+                        </a>
+                    </div>
+                </section>
+
+                <div className="border-t border-border/40" />
+
+                {/* 2. FEATURED PROJECTS SECTION */}
+                <section id="projects" className="space-y-5 scroll-mt-20">
+                    <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                            <h2 className="text-base sm:text-lg font-bold tracking-tight text-foreground">
+                                Projects
+                            </h2>
+                            <p className="text-xs text-muted-foreground">
+                                Selected production systems and open-source works.
+                            </p>
+                        </div>
+                        <Link 
+                            href="/project"
+                            className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
+                        >
+                            <span>View all</span>
+                            <ArrowUpRight className="size-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </Link>
+                    </div>
+
+                    <div className="space-y-3.5">
+                        {projects.map((project) => (
+                            <div 
+                                key={project.meta.slug}
+                                className="group relative rounded-xl border border-border/60 bg-card/40 hover:bg-card/80 hover:border-border transition-all duration-200 p-4 sm:p-5 space-y-3"
+                            >
+                                <div className="flex items-start justify-between gap-3">
+                                    <div className="space-y-1">
+                                        <div className="flex items-center gap-2">
+                                            <Link 
+                                                href={`/project/${project.meta.slug}`}
+                                                className="font-semibold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors"
+                                            >
+                                                {project.meta.title}
+                                            </Link>
+                                            <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-500 font-medium">
+                                                <span className="size-1.5 rounded-full bg-emerald-500" />
+                                                Live
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                                            {project.meta.description}
+                                        </p>
+                                    </div>
+
+                                    {project.meta.year && (
+                                        <span className="text-xs font-mono text-muted-foreground shrink-0 pt-0.5">
+                                            {project.meta.year}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-border/30">
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {project.meta.technologies?.slice(0, 4).map((tech) => (
+                                            <span 
+                                                key={tech} 
+                                                className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-muted/40 border border-border/30 text-muted-foreground"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex items-center gap-2 shrink-0">
+                                        {project.meta.githubUrl && (
+                                            <a 
+                                                href={project.meta.githubUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-muted-foreground hover:text-foreground text-xs p-1"
+                                                title="GitHub Repository"
+                                            >
+                                                <Github className="size-3.5" />
+                                            </a>
+                                        )}
+                                        <Link 
+                                            href={"/project/" + project.meta.slug}
+                                            className="text-xs font-mono text-primary flex items-center gap-0.5 hover:underline"
+                                        >
+                                            <span>Case study</span>
+                                            <ArrowUpRight className="size-3" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <div className="border-t border-border/40" />
+
+                {/* 3. TECH STACK (MINIMALIST PILLS) */}
+                <section id="tech-stack" className="space-y-4">
+                    <div className="space-y-0.5">
+                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-foreground">
+                            Tech Stack
+                        </h2>
+                        <p className="text-xs text-muted-foreground">
+                            Technologies I use to build scalable digital experiences.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                        {techStack.map((tech) => (
+                            <span 
+                                key={tech}
+                                className="text-xs font-mono px-3 py-1.5 rounded-lg border border-border/50 bg-card/40 text-foreground transition-colors cursor-default hover:border-primary/50"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                </section>
+
+                <div className="border-t border-border/40" />
+
+                {/* 4. WORK & EDUCATION TIMELINE */}
+                <section id="about" className="space-y-5 scroll-mt-20">
+                    <div className="space-y-0.5">
+                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-foreground">
+                            Experience & Education
+                        </h2>
+                        <p className="text-xs text-muted-foreground">
+                            My journey in software engineering so far.
+                        </p>
+                    </div>
+
+                    <div className="space-y-4">
+                        {experiences.map((exp, idx) => (
+                            <div key={idx} className="flex flex-col sm:flex-row sm:gap-4 items-start">
+                                <span className="text-xs font-mono text-muted-foreground shrink-0 w-32 pt-0.5">
+                                    {exp.period}
+                                </span>
+                                <div className="space-y-1 pt-1 sm:pt-0">
+                                    <div className="text-sm font-semibold text-foreground">
+                                        {exp.role} &nbsp;·&nbsp; <span className="text-muted-foreground font-normal">{exp.organization}</span>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground leading-relaxed">
+                                        {exp.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <div className="border-t border-border/40" />
+
+                {/* 5. RECENT POSTS SECTION */}
+                <section id="posts" className="space-y-5 scroll-mt-20">
+                    <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                            <h2 className="text-base sm:text-lg font-bold tracking-tight text-foreground">
+                                Writing & Notes
+                            </h2>
+                            <p className="text-xs text-muted-foreground">
+                                Reflections, architectural breakdowns, and engineering logs.
+                            </p>
+                        </div>
+                        <Link 
+                            href="/post"
+                            className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
+                        >
+                            <span>View all</span>
+                            <ArrowUpRight className="size-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </Link>
+                    </div>
+
+                    <div className="divide-y divide-border/40">
+                        {sortedPosts.slice(0, 5).map((post) => (
                             <Link 
                                 key={post.meta.slug} 
                                 href={"/post/" + post.meta.slug}
-                                className={cn(
-                                    "block border backdrop-blur-[4px] rounded-xl p-5 relative transition-all duration-300 group overflow-hidden",
-                                    index === 0 
-                                        ? "border-primary/40 bg-primary/5 hover:bg-primary/10 hover:border-primary/60 shadow-sm hover:shadow-md hover:-translate-y-0.5" 
-                                        : "border-primary/15 bg-background/40 hover:bg-background/80 hover:border-primary/40 shadow-sm hover:shadow-md hover:-translate-y-0.5"
-                                )}
+                                className="group py-3 flex items-baseline justify-between gap-4 block hover:text-primary transition-colors"
                             >
-                                <div className="flex items-center justify-between gap-2 mb-2">
-                                    <span className="text-[11px] font-mono text-primary uppercase font-bold tracking-wider">
-                                        {index === 0 ? "★ Latest Technical Post" : "Featured Article"}
-                                    </span>
-                                    <span className="text-[11px] font-mono text-muted-foreground">
-                                        {post.meta.date}
-                                    </span>
-                                </div>
-                                <h3 className="font-bold text-foreground text-base sm:text-lg group-hover:text-primary transition-colors mb-1.5">
+                                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
                                     {post.meta.title}
-                                </h3>
-                                <p className="text-muted-foreground text-xs sm:text-sm line-clamp-2">
-                                    {post.meta.description}
-                                </p>
+                                </span>
+                                <span className="text-xs font-mono text-muted-foreground shrink-0">
+                                    {post.meta.date}
+                                </span>
                             </Link>
                         ))}
-
-                        {projects.length > 0 && (
-                            <Link 
-                                href={"/project/" + projects[0].meta.slug}
-                                className="block border border-border/70 bg-card/40 hover:bg-card/70 hover:border-primary/50 backdrop-blur-[4px] rounded-xl p-5 transition-all duration-300 group shadow-sm hover:shadow-md hover:-translate-y-0.5"
-                            >
-                                <div className="flex items-center justify-between gap-2 mb-2">
-                                    <span className="text-[11px] font-mono text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1.5">
-                                        <span className="size-1.5 rounded-full bg-emerald-400" />
-                                        Spotlight Repository
-                                    </span>
-                                    <span className="text-[11px] font-mono text-muted-foreground">
-                                        {projects[0].meta.year || "2026"}
-                                    </span>
-                                </div>
-                                <h3 className="font-bold text-foreground text-base sm:text-lg group-hover:text-primary transition-colors mb-1.5">
-                                    {projects[0].meta.title}
-                                </h3>
-                                <p className="text-muted-foreground text-xs sm:text-sm line-clamp-2">
-                                    {projects[0].meta.description}
-                                </p>
-                            </Link>
-                        )}
                     </div>
-                </div>
+                </section>
 
-                {/* Subtle Scroll Down Prompt */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground text-xs font-mono animate-bounce opacity-70 hover:opacity-100 transition-opacity">
-                    <span>Scroll to explore</span>
-                    <ArrowDown className="size-4" />
-                </div>
-
-                <InteractiveConstellation />
-            </section>
-
-            {/* SECTION DIVIDER */}
-            <div className="max-w-6xl mx-auto px-4">
                 <div className="border-t border-border/40" />
-            </div>
 
-            {/* 2. PROJECTS SECTION */}
-            <section id="projects" className="py-20 px-4 max-w-6xl mx-auto scroll-mt-12">
-                <div className="space-y-3 mb-10 text-center">
-                    <div className="inline-flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider">
-                        <FolderGit2 className="size-3.5" />
-                        <span>Production & Open Source Work</span>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground font-mono">
-                        ~/repositories
-                    </h2>
-                    <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                        Directory of production applications, mobile architectures, and engineering prototypes. Click any project to open detailed case studies and technical blueprints.
-                    </p>
-                </div>
-
-                <ProjectExplorer initialProjects={projects} />
-            </section>
-
-            {/* SECTION DIVIDER */}
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="border-t border-border/40" />
-            </div>
-
-            {/* 3. POSTS / KNOWLEDGE BASE SECTION */}
-            <section id="posts" className="py-20 px-4 max-w-6xl mx-auto scroll-mt-12">
-                <div className="space-y-3 mb-10 text-center">
-                    <div className="inline-flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider">
-                        <Newspaper className="size-3.5" />
-                        <span>Engineering Insights & Notes</span>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground font-mono">
-                        ~/knowledge-base
-                    </h2>
-                    <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                        Chronological technical deep dives, system architectures, and production lessons.
-                    </p>
-                </div>
-
-                <PostExplorer initialPosts={sortedPosts} />
-            </section>
-
-            {/* SECTION DIVIDER */}
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="border-t border-border/40" />
-            </div>
-
-            {/* 4. ABOUT / TERMINAL IDE SECTION */}
-            <section id="about" className="py-20 px-4 max-w-5xl mx-auto scroll-mt-12">
-                <div className="space-y-3 mb-10 text-center">
-                    <div className="inline-flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider">
-                        <Terminal className="size-3.5" />
-                        <span>Developer Dossier & Interactive Shell</span>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground font-mono">
-                        ~/profile-ide
-                    </h2>
-                    <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                        Inspect tech stack taxonomy, career history, awards, and interactive terminal session.
-                    </p>
-                </div>
-
-                <TerminalAbout />
-            </section>
-
-            {/* SECTION DIVIDER */}
-            <div className="max-w-5xl mx-auto px-4">
-                <div className="border-t border-border/40" />
-            </div>
-
-            {/* 5. CONTACT SECTION */}
-            <section id="contact" className="py-20 px-4 max-w-4xl mx-auto scroll-mt-12">
-                <div className="space-y-3 mb-10 text-center">
-                    <div className="inline-flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider">
-                        <Mail className="size-3.5" />
-                        <span>Get In Touch</span>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground font-mono">
-                        ~/contact-me
-                    </h2>
-                    <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                        Interested in collaboration, freelance project, or full-time opportunities? Send a message directly.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                    <div className="space-y-6 p-6 rounded-xl bg-card/60 border border-border/70 backdrop-blur-md font-mono text-xs">
-                        <div className="text-primary font-bold text-sm">Direct Coordinates</div>
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-3">
-                                <Mail className="size-4 text-primary shrink-0" />
-                                <a href="mailto:muhhasbiassidiqi18@gmail.com" className="hover:underline text-foreground truncate">
-                                    muhhasbiassidiqi18@gmail.com
-                                </a>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Linkedin className="size-4 text-blue-400 shrink-0" />
-                                <a href="https://linkedin.com/in/rnghbt" target="_blank" rel="noopener noreferrer" className="hover:underline text-foreground">
-                                    linkedin.com/in/rnghbt
-                                </a>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Github className="size-4 text-foreground shrink-0" />
-                                <a href="https://github.com/hasbisdqi" target="_blank" rel="noopener noreferrer" className="hover:underline text-foreground">
-                                    github.com/hasbisdqi
-                                </a>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Twitter className="size-4 text-sky-400 shrink-0" />
-                                <a href="https://twitter.com/rnghbt" target="_blank" rel="noopener noreferrer" className="hover:underline text-foreground">
-                                    @rnghbt
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="pt-4 border-t border-border/40 text-emerald-400 flex items-center gap-2">
-                            <span className="size-2 rounded-full bg-emerald-500 animate-ping" />
-                            <span>Status: Open to full-time, freelance, & contract roles</span>
-                        </div>
+                {/* 6. CONTACT SECTION */}
+                <section id="contact" className="space-y-5 scroll-mt-20">
+                    <div className="space-y-1">
+                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-foreground">
+                            Let&apos;s Talk
+                        </h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                            If you&apos;ve read this far, feel free to reach out for collaborations, freelance work, or full-time opportunities.
+                        </p>
                     </div>
 
-                    <div className="p-6 rounded-xl bg-card/60 border border-border/70 backdrop-blur-md">
+                    <div className="rounded-xl border border-border/60 bg-card/40 p-4 sm:p-5">
                         <ContactForm />
                     </div>
-                </div>
-            </section>
+                </section>
+
+                {/* Clean Samworks-style Minimal Footer */}
+                <footer className="pt-8 border-t border-border/30 text-center font-mono text-xs text-muted-foreground space-y-1">
+                    <p className="italic text-foreground/80">&ldquo;Continuous learning, thoughtful engineering.&rdquo;</p>
+                    <p className="text-[11px] text-muted-foreground/70">Designed &amp; Developed by Hasbi Assidiqi · © {new Date().getFullYear()}</p>
+                </footer>
+            </div>
         </main>
     );
 }

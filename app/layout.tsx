@@ -18,19 +18,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "My Awesome Site",
-    description: "Explore my projects, blog posts, and personal journey.",
+    title: "Hasbi Assidiqi — Full Stack Developer & Systems Engineer",
+    description: "Personal portfolio of Hasbi Assidiqi. Crafting modern digital products where thoughtful design meets clean, scalable code.",
     openGraph: {
-      title: "My Awesome Site",
-      description: "Explore my projects, blog posts, and personal journey.",
+      title: "Hasbi Assidiqi — Full Stack Developer & Systems Engineer",
+      description: "Crafting digital products where thoughtful design meets clean, scalable code.",
       url: "https://rnghbt.me",
-      siteName: "My Awesome Site",
+      siteName: "Hasbi Assidiqi",
       images: [
         {
-          url: getOgImageUrl('My Awesome Site'),
+          url: getOgImageUrl('Hasbi Assidiqi'),
           width: 1200,
           height: 630,
-          alt: "My Awesome Site OG Image",
+          alt: "Hasbi Assidiqi Portfolio",
         },
       ],
       locale: "en_US",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     },
     twitter: {
       card: "summary_large_image",
-      title: "My Awesome Site",
-      description: "Explore my projects, blog posts, and personal journey.",
-      images: [getOgImageUrl('My Awesome Site')],
+      title: "Hasbi Assidiqi — Full Stack Developer",
+      description: "Crafting digital products where thoughtful design meets clean, scalable code.",
+      images: [getOgImageUrl('Hasbi Assidiqi')],
     },
   };
   
