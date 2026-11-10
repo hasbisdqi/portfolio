@@ -8,8 +8,7 @@ import ProjectExplorer from "./project/project-explorer";
 import PostExplorer from "./post/post-explorer";
 import TerminalAbout from "@/components/terminal-about";
 import ContactForm from "./about/contact-form";
-import { MotionParallax, MotionFpvDrone } from "@/components/motion";
-import { ArrowDown, FolderGit2, Newspaper, Terminal, Mail, User, Github, Linkedin, Twitter, Sparkles } from "lucide-react";
+import { ArrowDown, FolderGit2, Newspaper, Terminal, Mail, User, Github, Linkedin, Twitter } from "lucide-react";
 
 export default async function Home() {
     const [posts, projects] = await Promise.all([
@@ -134,51 +133,6 @@ export default async function Home() {
                 </div>
 
                 <InteractiveConstellation />
-            </section>
-
-            {/* SECTION DIVIDER */}
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="border-t border-border/40" />
-            </div>
-
-            {/* MOTION PROMPT SHOWCASE (Parallax & FPV Drone) */}
-            <section id="motion-lab" className="py-20 px-4 max-w-6xl mx-auto scroll-mt-12">
-                <div className="space-y-3 mb-10 text-center">
-                    <div className="inline-flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider">
-                        <Sparkles className="size-3.5" />
-                        <span>Interactive Motion Graphics Engine</span>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground font-mono">
-                        ~/motion-prompts
-                    </h2>
-                    <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                        Procedural Canvas 60 FPS motion graphics implementations based on Motion-Prompt specifications (#016 Parallax & #035 FPV Drone Shot).
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between font-mono text-xs text-muted-foreground">
-                            <span>01. CAMERA PAN & LAYERED DEPTH</span>
-                            <span className="text-emerald-400">4.7s Cycle</span>
-                        </div>
-                        <MotionParallax className="w-full" />
-                        <p className="text-xs text-muted-foreground font-mono leading-relaxed pt-1">
-                            Sine-wave camera pan (±108px) across 6 discrete depth planes: stars (0.05x), moon (0.1x), far ridge (0.28x), mid ridge (0.6x), front trees (1.25x), and foreground silhouettes (2.1x).
-                        </p>
-                    </div>
-
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between font-mono text-xs text-muted-foreground">
-                            <span>02. 3D FPV SPEED & BANKING</span>
-                            <span className="text-sky-400">50 km/h (14 m/s)</span>
-                        </div>
-                        <MotionFpvDrone className="w-full" />
-                        <p className="text-xs text-muted-foreground font-mono leading-relaxed pt-1">
-                            Real-time camera banking (±12.6° roll, ±2.9° yaw), altitude weaving, dual-row procedural tree rushing, and dynamic radial speed streaks.
-                        </p>
-                    </div>
-                </div>
             </section>
 
             {/* SECTION DIVIDER */}
